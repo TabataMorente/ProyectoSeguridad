@@ -31,7 +31,7 @@ Gorka Bidaguren
 ## Funcionamiento de la web
 **PHP:** genera el contenido dinámico (datos desde la base de datos, lógica, etc.). <br>
 
-**HTML**: estructura la página (elementos como '<div>, '<table>', etc.). <br>**
+**HTML**: estructura la página (elementos como < div >, < table >, etc.). <br>
 
 **CSS:** define el estilo (colores, fuentes, diseño responsivo). <br>
 
