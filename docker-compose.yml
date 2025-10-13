@@ -1,20 +1,20 @@
 services:
   web:
-    image: php:8.2-apache
-    container_name: proyectoseguridad_web
+    image: web
     environment:
       - ALLOW_OVERRIDE=true
     ports:
       - "81:80"
-    depends_on:
+    links:
       - db
     volumes:
       - ./app:/var/www/html/
 
   db:
     image: mariadb:10.8.2
-    container_name: proyectoseguridad_db
     restart: always
+    volumes:
+      - ./mysql:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_USER: admin
@@ -22,18 +22,15 @@ services:
       MYSQL_DATABASE: database
     ports:
       - "8889:3306"
-    volumes:
-      - ./mysql:/var/lib/mysql
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
-    container_name: proyectoseguridad_phpmyadmin
-    depends_on:
+    links:
       - db
     ports:
       - "8890:80"
     environment:
-      PMA_HOST: db
-      PMA_USER: admin
-      PMA_PASSWORD: test
-      PMA_ARBITRARY: 1
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: test
+      MYSQL_DATABASE: database
+
