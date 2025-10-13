@@ -19,9 +19,9 @@ Feel free to make pull requests and help to improve this.
 If you are looking for phpMyAdmin, take a look at [this](https://github.com/celsocelante/docker-lamp/issues/2).
 
 ## Integrantes del grupo:
-Laura Calvo \\
-Marco Lartategui \\
-Iker Fuente \\
-Tabata Morente \\
-Ivan Herrera \\
+Laura Calvo <br>
+Marco Lartategui <br>
+Iker Fuente <br>
+Tabata Morente <br>
+Ivan Herrera <br>
 Gorka Bidaguren
