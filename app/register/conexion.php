@@ -1,7 +1,7 @@
 <?php
-$host = "localhost";
-$usuario = "root";
-$clave = "";
+$host = "proyectoseguridad-db-1";
+$usuario = "admin";
+$clave = "test";
 $bd = "database";
 
 $conn = new mysqli($host, $usuario, $clave, $bd);

@@ -14,7 +14,7 @@ $fecha    = isset($_POST['fecha'])    ? $_POST['fecha']    : '';
 $email    = isset($_POST['email'])    ? $_POST['email']    : '';
 
 // --- Construir la consulta directamente (muy INSEGURO) ---
-$sql = "INSERT INTO usuarios (nombre, dni, telefono, fecha_nacimiento, email)
+$sql = "INSERT INTO usuarios (nombre, dni, telefono, fecha, email)
         VALUES ('$nombre', '$dni', '$telefono', '$fecha', '$email')";
 
 if ($conn->query($sql) === TRUE) {
