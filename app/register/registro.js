@@ -1,9 +1,14 @@
-
 document.addEventListener("DOMContentLoaded", () => {
-    const form = document.getElementById("registroForm");
+    const form = document.getElementById("register_form");
+
+    if (!form) {
+        console.warn("No se encontró el formulario register_form");
+        return; // evita el error
+    }
 
     form.addEventListener("submit", function(e) {
-        e.preventDefault(); // Evitar envío hasta que todo sea válido
+        e.preventDefault();
+        console.log("Submit detectado");
 
         // Limpiar mensajes anteriores
         document.querySelectorAll(".error").forEach(el => el.textContent = "");

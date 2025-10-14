@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registro de Usuario</title>
+  <script src="registro.js" defer></script>
+</head>
+<body>
+  <h2>Registro de Usuario</h2>
+  <form id="register_form" action="procesar_registro.php" method="POST">
+    <label>Nombre y Apellidos:</label><br>
+    <input type="text" id="nombre" name="nombre" required><br><br>
+
+    <label>DNI:</label><br>
+    <input type="text" id="dni" name="dni" required><br><br>
+
+    <label>Teléfono:</label><br>
+    <input type="text" id="telefono" name="telefono" required><br><br>
+
+    <label>Fecha de Nacimiento:</label><br>
+    <input type="date" id="fecha" name="fecha" required><br><br>
+
+    <label>Email:</label><br>
+    <input type="email" id="email" name="email" required><br><br>
+
+    <button id="register_submit" type="submit">Crear cuenta</button>
+  </form>
+  <p class="message">¿Ya tienes cuenta? <a href="../login/index.html">Inicia sesión</a></p>
+</body>
+</html>
