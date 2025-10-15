@@ -12,10 +12,11 @@ $dni      = isset($_POST['dni'])      ? $_POST['dni']      : '';
 $telefono = isset($_POST['telefono']) ? $_POST['telefono'] : '';
 $fecha    = isset($_POST['fecha'])    ? $_POST['fecha']    : '';
 $email    = isset($_POST['email'])    ? $_POST['email']    : '';
+$contrasena = isset($_POST['contrasena'])    ? $_POST['contrasena']    : '';
 
 // --- Construir la consulta directamente (muy INSEGURO) ---
-$sql = "INSERT INTO usuarios (nombre, dni, telefono, fecha, email)
-        VALUES ('$nombre', '$dni', '$telefono', '$fecha', '$email')";
+$sql = "INSERT INTO usuarios (nombre, dni, contrasena, telefono, fecha, email)
+        VALUES ('$nombre', '$dni', $contrasena, '$telefono', '$fecha', '$email')";
 
 if ($conn->query($sql) === TRUE) {
     echo "✅ Registro completado correctamente (inseguro).";
