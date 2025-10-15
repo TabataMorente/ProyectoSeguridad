@@ -15,8 +15,8 @@ $email    = isset($_POST['email'])    ? $_POST['email']    : '';
 $contrasena = isset($_POST['contrasena'])    ? $_POST['contrasena']    : '';
 
 // --- Construir la consulta directamente (muy INSEGURO) ---
-$sql = "INSERT INTO usuarios (nombre, dni, contrasena, telefono, fecha, email)
-        VALUES ('$nombre', '$dni', $contrasena, '$telefono', '$fecha', '$email')";
+$sql = "INSERT INTO usuarios (nombre, contrasena, dni, telefono, fecha, email)
+        VALUES ('$nombre', '$contrasena','$dni', '$telefono', '$fecha', '$email')";
 
 if ($conn->query($sql) === TRUE) {
     echo "✅ Registro completado correctamente (inseguro).";
