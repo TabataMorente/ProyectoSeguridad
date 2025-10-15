@@ -33,42 +33,48 @@
       border-radius: 5px;
       font-weight: bold;
     }
-    button {
-    display: block;
-    margin: 15px auto; /* centrado horizontal */
-    text-decoration: none;
-    background: #4CAF50;
-    color: white;
-    padding: 16px 40px; /* más grande */
-    border-radius: 5px;
-    font-size: 18px; /* tamaño de texto mayor */
-    border: none;
-    cursor: pointer;
-    width: fit-content; /* que tome solo el ancho necesario */
-    }
-    
-    input {
-    display: block;
-    margin: 15px auto; /* centra el input horizontalmente */
-    padding: 12px 20px; /* tamaño cómodo */
-    font-size: 16px; /* texto legible */
-    border-radius: 5px;
-    border: 1.5px solid #4CAF50; /* borde verde, como el botón */
-    width: 300px; /* ancho fijo para que queden iguales */
-    box-sizing: border-box; /* para que el padding no aumente el ancho */
-    outline: none; /* elimina el borde azul al enfocar, lo reemplazamos */
-    transition: border-color 0.3s ease;
-    }
-
-    input:focus {
-    border-color: #388E3C; /* un verde más oscuro al enfocar */
-    box-shadow: 0 0 5px #4CAF50;
-    }
-
-
     a:hover {
       background: #45a049;
     }
+    button {
+      display: block;
+      margin: 15px auto; /* centrado horizontal */
+      text-decoration: none;
+      background: #4CAF50;
+      color: white;
+      padding: 16px 40px; /* más grande */
+      border-radius: 5px;
+      font-size: 18px; /* tamaño de texto mayor */
+      border: none;
+      cursor: pointer;
+      width: fit-content; /* que tome solo el ancho necesario */
+    }
+    
+    input {
+      display: block;
+      margin: 15px auto; /* centra el input horizontalmente */
+      padding: 12px 20px; /* tamaño cómodo */
+      font-size: 16px; /* texto legible */
+      border-radius: 5px;
+      border: 1.5px solid #4CAF50; /* borde verde, como el botón */
+      width: 300px; /* ancho fijo para que queden iguales */
+      box-sizing: border-box; /* para que el padding no aumente el ancho */
+      outline: none; /* elimina el borde azul al enfocar, lo reemplazamos */
+      transition: border-color 0.3s ease;
+    }
+
+    input:focus {
+      border-color: #388E3C; /* un verde más oscuro al enfocar */
+      box-shadow: 0 0 5px #4CAF50;
+    }
+    .crear-cuenta {
+      all: unset; /* quita todos los estilos heredados */
+      font-weight: bold;
+      text-decoration: underline;
+      cursor: pointer; /* para que se vea que es clickable */
+    }
+
+
   </style>
 </head>
 <body>
@@ -79,6 +85,8 @@
       <input type="text" placeholder="username"/>
       <input type="password" placeholder="password"/>
       <button type="submit">Iniciar sesión</button>
+      <p class="message">¿No registrado? <a href="/register/register.html" class="crear-cuenta">Crear cuenta</a></p>
+
     </form>
   </div>
 
