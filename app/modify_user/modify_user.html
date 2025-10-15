@@ -2,8 +2,8 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Registro de Usuario</title>
-  <script src="registro.js" defer></script>
+  <title>Modificar mis datos</title>
+  <script src="validar_modificar.js" defer></script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -13,8 +13,9 @@
       align-items: center;
       height: 100vh;
       margin: 0;
-      position: relative; /* necesario para posicionar el enlace */
+      position: relative;
     }
+
     .container {
       text-align: center;
       background: white;
@@ -24,9 +25,11 @@
       max-width: 400px;
       width: 100%;
     }
+
     h1 {
       margin-bottom: 30px;
     }
+
     button {
       display: block;
       margin: 15px auto;
@@ -41,9 +44,11 @@
       font-weight: bold;
       transition: background 0.3s ease;
     }
+
     button:hover {
       background: #45a049;
     }
+
     input {
       display: block;
       margin: 15px auto;
@@ -56,48 +61,16 @@
       outline: none;
       transition: border-color 0.3s ease;
     }
+
     input:focus {
       border-color: #388E3C;
       box-shadow: 0 0 5px #4CAF50;
     }
 
-
-    /* inicio de sesión con texto */
-    .login-container {
-    position: absolute;
-    top: 60px;  
-    right: 20px;
-    display: flex;
-    flex-direction: column; 
-    align-items: flex-end;  
-    white-space: nowrap;    
-    font-family: Arial, sans-serif;
-    font-size: 16px;      
-    color: #333;
-    z-index: 10;
-    gap: 5px;               
-    }
-
-    .login-container a {
-      background: #4CAF50;
-      color: white;
-      padding: 8px 16px;
-      border-radius: 5px;
-      text-decoration: none;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background 0.3s ease;
-      white-space: nowrap; /* evita que el botón se divida */
-      }
-
-    .login-container a:hover {
-      background: #45a049;
-      }
-
-      .volver-container {
+    .volver-container {
       position: absolute;
-      top: 10px;
-      left: 20px;
+      top: 60px;
+      right: 20px;
       display: flex;
       flex-direction: column;
       align-items: flex-end;
@@ -127,26 +100,18 @@
   <div class="volver-container">
     <a href="../index.html">Volver al inicio</a>
   </div>
-  
-  <div class="login-container">
-    <div>¿Ya tienes cuenta?</div>
-    <a href="../login/login.html">Inicia sesión</a>
-  </div>
 
   <div class="container">
-    <h1>Registro de Usuario</h1>
-    <form id="register_form" action="procesar_registro.php" method="POST">
+    <h1>Modificar mis datos</h1>
+    <form id="user_modify_form" action="procesar_modificar.php" method="POST">
       <label for="nombre">Nombre y Apellidos:</label>
       <input type="text" id="nombre" name="nombre" required />
 
-      <label for="contrasena">Contraseña:</label>
-      <input type="password" id = "contrasena"/>
-
       <label for="dni">DNI:</label>
-      <input type="text" id="dni" name="dni" required />
+      <input type="text" id="dni" name="dni" required placeholder="11111111-Z" />
 
       <label for="telefono">Teléfono:</label>
-      <input type="text" id="telefono" name="telefono" required />
+      <input type="text" id="telefono" name="telefono" required placeholder="9 dígitos" />
 
       <label for="fecha">Fecha de Nacimiento:</label>
       <input type="date" id="fecha" name="fecha" required />
@@ -154,8 +119,9 @@
       <label for="email">Email:</label>
       <input type="email" id="email" name="email" required />
 
-      <button id="register_submit" type="submit">Crear cuenta</button>
+      <button id="user_modify_submit" type="submit">Guardar cambios</button>
     </form>
   </div>
 </body>
 </html>
+
