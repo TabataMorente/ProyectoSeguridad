@@ -1,29 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <title>Los MontaMarcos</title>
   <link rel="stylesheet" href="login/login.css">
-  <script src="login/login.js"></script>
+  <script src="login/login.js"></script
 </head>
 <body>
   <div class="login-page">
-  <div class="form">
-    <form class="register-form">
-      <input type="text" placeholder="name"/>
-      <input type="password" placeholder="password"/>
-      <input type="text" placeholder="email address"/>
-      <button>create</button>
-      <p class="message">Already registered? <a href="#">Sign In</a></p>
-    </form>
-    <form class="login-form">
-      <input type="text" placeholder="username"/>
-      <input type="password" placeholder="password"/>
-      <button>login</button>
-      <p class="message">Not registered? <a href="registro">Create an account</a></p>
-    </form>
+    <div class="form">
+      <form id="login_form" action="procesar_login.php" method="POST">
+        <input type="text" name="usuario" placeholder="Usuario" required />
+        <input type="password" name="password" placeholder="Contraseña" required />
+        <button id="login_submit" type="submit">Entrar</button>
+        <p class="message">¿No estás registrado? <a href="../register/index.html">Crear cuenta</a></p>
+      </form>
+    </div>
   </div>
-</div>
 </body>
 </html>
+
 
