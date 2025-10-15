@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `usuarios` (
   `id` int(11) AUTO_INCREMENT PRIMARY KEY NOT NULL,
   `nombre` text NOT NULL,
-  -- `contrasena` text NOT NULL, -- por confirmar donde poner las contrasenas
+  `contrasena` text NOT NULL, -- por confirmar donde poner las contrasenas
   `dni` text NOT NULL,
   `telefono` int(9) NOT NULL,
   `fecha` text NOT NULL,
