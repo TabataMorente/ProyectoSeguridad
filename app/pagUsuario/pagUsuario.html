@@ -41,7 +41,11 @@
 <body>
 
   <div class="container">
-    <h1>Los MontaMarcos</h1>
+	<?php
+		$resultado = "<h1> Bienvenido, " . $_GET["user"] . "<h1>";
+		echo $resultado;
+	?>
+    <!--<h1>Los MontaMarcos</h1>--!>
     <a href="../modify_user/modify_user.html">Modificar Datos</a>
     <!-- Luego aqui se pondrian las demas opciones, como por ejemplo lista de cerdos y asi -->
   </div>

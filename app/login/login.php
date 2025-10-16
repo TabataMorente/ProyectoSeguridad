@@ -1,7 +1,7 @@
 <?php
 	$problema = true;
 
-	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+	if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 		// The request is using the POST method
 
 		$hostname = "db";
@@ -10,27 +10,44 @@
 		$db = "database";
 
 		$conn = mysqli_connect($hostname,$username,$password,$db);
-
-		$nombre = $_POST["nombre"];
-		$contrasena = $_POST["contrasena"];
 		
 		if ($conn->connect_error) {
 			die("Database connection failed: " . $conn->connect_error);
 		}
+		
+		$nombre = $_GET["nombre"];
+		$contrasena = $_GET["contrasena"];
 
-		$comando = "SELECT (`nombre`, `contrasena`) FROM `usuarios` WHERE `nombre`=" . $nombre . ";";
+		$comando = "SELECT `nombre`, `contrasena` FROM `usuarios` WHERE `nombre`='" . $nombre . "';";
 
 		$query = mysqli_query($conn, $comando) or die (mysqli_error($conn));
-
-		echo $query;
-
+		
+		if ($row = mysqli_fetch_array($query))
+		{
+			if ( $row["contrasena"] == $contrasena )
+			{
+				header("Location:/pagUsuario/pagUsuario.php?user=" . urlencode($nombre));
+				exit;
+			}
+			else
+			{
+				header("Location:/login/login.html");
+				exit;
+			}
+		}
+		else
+		{
+			header("Location:/login/login.html");
+			exit;
+		}
+		
 		$problema = false;
-
+		$conn->close(); // Es recomendable cerrar la base de datos despues de usarla
 	}
 
 	if ( $problema )
 	{
-		echo "Hubo un problema al registrar la base de datos";
+		echo "Hubo un problema al consultar la base de datos";
 	}
 
 ?>
