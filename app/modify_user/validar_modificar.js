@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const telefono = document.getElementById("telefono").value;
     const fecha = document.getElementById("fecha").value.trim();
     const email = document.getElementById("email").value;
+    const contrasena = document.getElementById("contrasena").value.trim();
     
     if (!/^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$/.test(nombre)) {
         mostrarError("nombre", "Solo se permiten letras y espacios.");

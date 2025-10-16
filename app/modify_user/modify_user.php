@@ -48,11 +48,12 @@ $sql = "UPDATE usuarios SET
             dni = ?, 
             telefono = ?, 
             fecha_nacimiento = ?, 
-            email = ?
+            email = ?,
+            contrasena = ?,
         WHERE id = ?";
 
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("sssssi", $nombre, $dni, $telefono, $fecha, $email, $user_id);
+$stmt->bind_param("sssssi", $nombre, $dni, $telefono, $fecha, $email, $contrasena, $user_id);
 
 if ($stmt->execute()) {
     echo "<h3>Datos actualizados correctamente ✅</h3>";
