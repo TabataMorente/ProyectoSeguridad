@@ -20,6 +20,7 @@ $sql = "INSERT INTO usuarios (nombre, contrasena, dni, telefono, fecha, email)
 
 if ($conn->query($sql) === TRUE) {
     echo "✅ Registro completado correctamente (inseguro).";
+    echo "<a href='../login/login.html'>  Inicia sesión</a>";
 } else {
     // En un entorno real no deberías mostrar $conn->error a usuarios finales
     echo "❌ Error al insertar: " . $conn->error;

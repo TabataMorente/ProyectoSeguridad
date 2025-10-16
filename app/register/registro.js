@@ -63,7 +63,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // --- Si todo es válido ---
         if (valido) {
-            alert("¡Registro válido!");
             form.submit(); // Enviar formulario al servidor si todo es correcto
         }
     });
