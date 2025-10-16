@@ -31,10 +31,10 @@ CREATE TABLE `usuarios` (
   `id` int(11) AUTO_INCREMENT PRIMARY KEY NOT NULL,
   `nombre` text NOT NULL,
   `contrasena` text NOT NULL, -- por confirmar donde poner las contrasenas
-  `dni` text NOT NULL,
+  `dni` text NOT NULL UNIQUE,
   `telefono` int(9) NOT NULL,
   `fecha` text NOT NULL,
-  `email` text NOT NULL
+  `email` text NOT NULL UNIQUE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
