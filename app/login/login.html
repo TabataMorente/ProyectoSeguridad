@@ -3,106 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Los MontaMarcos - Home</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f7f7f7;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
-    .container {
-      text-align: center;
-      background: white;
-      padding: 40px;
-      border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
-    }
-    h1 {
-      margin-bottom: 30px;
-    }
-    a {
-      display: block;
-      margin: 15px 0;
-      text-decoration: none;
-      background: #4CAF50;
-      color: white;
-      padding: 12px 20px;
-      border-radius: 5px;
-      font-weight: bold;
-    }
-    a:hover {
-      background: #45a049;
-    }
-    button {
-      display: block;
-      margin: 15px auto; /* centrado horizontal */
-      text-decoration: none;
-      background: #4CAF50;
-      color: white;
-      padding: 16px 40px; /* más grande */
-      border-radius: 5px;
-      font-size: 18px; /* tamaño de texto mayor */
-      border: none;
-      cursor: pointer;
-      width: fit-content; /* que tome solo el ancho necesario */
-    }
-    
-    input {
-      display: block;
-      margin: 15px auto; /* centra el input horizontalmente */
-      padding: 12px 20px; /* tamaño cómodo */
-      font-size: 16px; /* texto legible */
-      border-radius: 5px;
-      border: 1.5px solid #4CAF50; /* borde verde, como el botón */
-      width: 300px; /* ancho fijo para que queden iguales */
-      box-sizing: border-box; /* para que el padding no aumente el ancho */
-      outline: none; /* elimina el borde azul al enfocar, lo reemplazamos */
-      transition: border-color 0.3s ease;
-    }
-
-    input:focus {
-      border-color: #388E3C; /* un verde más oscuro al enfocar */
-      box-shadow: 0 0 5px #4CAF50;
-    }
-    .crear-cuenta {
-      all: unset; /* quita todos los estilos heredados */
-      font-weight: bold;
-      text-decoration: underline;
-      cursor: pointer; /* para que se vea que es clickable */
-    }
-
-    .volver-container {
-      position: absolute;
-      top: 10px;
-      right: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      font-family: Arial, sans-serif;
-      font-size: 16px;
-      color: #333;
-      gap: 5px;
-    }
-
-    .volver-container a {
-      background: #4CAF50;
-      color: white;
-      padding: 8px 16px;
-      border-radius: 5px;
-      text-decoration: none;
-      font-weight: bold;
-      transition: background 0.3s ease;
-    }
-
-    .volver-container a:hover {
-      background: #45a049;
-    }
-
-
-  </style>
+	<link rel="stylesheet" type="text/css" href="login.css">
+	<script type="text/javascript" src="login.js"></script>
 </head>
 <body>
   <div class="volver-container">
@@ -111,10 +13,10 @@
 
   <div class="container">
     <h1>Inicio de sesión</h1>
-    <form class="login-form" action="/login">
-      <input type="text" placeholder="username"/>
-      <input type="password" placeholder="password"/>
-      <button type="submit">Iniciar sesión</button>
+    <form class="login-form" name="login_formulario" action="login.php" method="post">
+      <input type="text" name="usuario" placeholder="username"/>
+      <input type="password" name="contrasena" placeholder="password"/>
+      <input type="button" class="boton" onclick="iniciar_sesion()" value="Iniciar sesion">
       <p class="message">¿No registrado? <a href="/register/register.html" class="crear-cuenta">Crear cuenta</a></p>
 
     </form>
