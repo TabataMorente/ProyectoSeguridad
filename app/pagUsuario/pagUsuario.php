@@ -1,6 +1,7 @@
 <?php
 
 	$nombre = "null";
+	$email = "null";
 
 	if ( $_SERVER['REQUEST_METHOD'] === "GET")
 	{
@@ -25,6 +26,7 @@
 			if ($row = mysqli_fetch_array($query))
 			{
 				$nombre = $row["nombre"];
+				$email = $_GET["user"];
 			}
 
 			$conn->close();
