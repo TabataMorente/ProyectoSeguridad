@@ -18,7 +18,7 @@
 		$nombre = $_GET["nombre"];
 		$contrasena = $_GET["contrasena"];
 
-		$comando = "SELECT `nombre`, `contrasena` FROM `usuarios` WHERE `nombre`='" . $nombre . "';";
+		$comando = "SELECT `email`, `contrasena` FROM `usuarios` WHERE `email`='" . $nombre . "';";
 
 		$query = mysqli_query($conn, $comando) or die (mysqli_error($conn));
 		

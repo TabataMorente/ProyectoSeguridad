@@ -1,3 +1,25 @@
 <?php
+
+	// Esto es para acceder al nombre
+	$hostname = "db";
+	$username = "admin";
+	$password = "test";
+	$db = "database";
+
+	$conn = mysqli_connect($hostname,$username,$password,$db);
+		
+	if ($conn->connect_error) {
+		die("Database connection failed: " . $conn->connect_error);
+	}
+
+	$comando = "SELECT `nombre` FROM `usuarios` WHERE `email`='" . $_GET["user"] . "';";
+	
+	$query = mysqli_query($conn, $comando) or die (mysqli_error($conn));
+
+	if ($row = mysqli_fetch_array($query))
+	{
+		$nombre = $row["nombre"];
+	}
+
 	include "pagUsuario.html";
 ?>
