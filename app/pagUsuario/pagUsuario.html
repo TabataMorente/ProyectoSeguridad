@@ -42,11 +42,14 @@
 
   <div class="container">
 	<?php
-		$resultado = "<h1> Bienvenido, " . $nombre . "<h1>";
-		echo $resultado;
+		if ($nombre)
+		{
+			$resultado = "<h1> Bienvenido, " . $nombre . "<h1>";
+			echo $resultado;
+		}
 	?>
     <!--<h1>Los MontaMarcos</h1>--!>
-    <a href="../modify_user/modify_user.html">Modificar Datos</a>
+    <a href="/modify_user/modify_user.html">Modificar Datos</a>
     <!-- Luego aqui se pondrian las demas opciones, como por ejemplo lista de cerdos y asi -->
   </div>
 </body>
