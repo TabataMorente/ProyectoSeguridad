@@ -42,6 +42,7 @@ if ($conn->query($sql) === TRUE) {
 } else {
     // En un entorno real no deberías mostrar $conn->error a usuarios finales
     echo "❌ Error al insertar: " . $conn->error;
+    echo "<a href=" . "/modify_user/modify_user.php?user=" . $emailAnt . ">  Volver</a>";
 }
 
 $conn->close();
