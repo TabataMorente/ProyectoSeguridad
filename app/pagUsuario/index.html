@@ -41,18 +41,20 @@
 <body>
 
   <div class="container">
-        <?php
-                if ($nombre)
-                {
-                        $resultado = "<h1> Bienvenido, " . $nombre . "<h1>";
-                        echo $resultado;
-                }
+	<?php
+		if ($nombre)
+		{
+			$resultado = "<h1> Bienvenido, " . $nombre . "<h1>";
+			echo $resultado;
+		}
 
-                if ($email and $email !== "null")
-                {
-                        echo "<a href=" . "/modify_user/modify_user.php?user=" . $email . ">Modificar Datos</a>";
-                }
-        ?>
+		if ($email and $email !== "null")
+		{
+		    	echo "<a href=" . "/modify_user/modify_user.php?user=" . $email . ">Modificar Datos</a>";
+		    	echo "<a href=" . "/items/items.php?user=" . $email . ">Modificar Apuestas</a>";
+		    	echo "<a href=" . "/add_item/add_item.php?user=" . $email . ">Eliminar Apuestas</a>";
+		}
+	?>
     <!--<h1>Los MontaMarcos</h1>--!>
     <!-- Luego aqui se pondrian las demas opciones, como por ejemplo lista de cerdos y asi -->
   </div>
