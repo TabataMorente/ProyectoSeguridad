@@ -33,12 +33,12 @@
 				}
 				else
 				{
-					header("Location:/login/login.html");
+					header("Location:/login/index.html");
 				}
 			}
 			else	
 			{
-				header("Location:/login/login.html");
+				header("Location:/login/index.html");
 			}
 	
 			$problema = false;

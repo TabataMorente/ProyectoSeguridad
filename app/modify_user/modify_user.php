@@ -1,68 +1,45 @@
 <?php
-// modify_user.php
 
-// --- 1. Conexión con la base de datos ---
-$servername = "mysql";       // nombre del servicio en docker-compose.yml
-$username = "root";          // cambia si usáis otro usuario
-$password = "root";          // cambia si usáis otra contraseña
-$database = "usuarios_db";   // cambia por el nombre real de tu base de datos
+        $nombre = "null";
+        $email = "null";
+        $dni = "null";
+        $telefono = "null";
+        $fecha = "null";
+        $contrasena = "null";
 
-$conn = new mysqli($servername, $username, $password, $database);
+        if ( $_SERVER['REQUEST_METHOD'] === "GET")
+        {
+                if ( isset($_GET["user"]) )
+                {
+                        // Esto es para acceder al nombre
+                        $hostname = "db";
+                        $username = "admin";
+                        $password = "test";
+                        $db = "database";
 
-if ($conn->connect_error) {
-    die("Error de conexión: " . $conn->connect_error);
-}
+                        $conn = mysqli_connect($hostname,$username,$password,$db);
 
-// --- 2. Recoger datos del formulario ---
-$nombre = $_POST['nombre'] ?? '';
-$dni = strtoupper($_POST['dni'] ?? '');
-$telefono = $_POST['telefono'] ?? '';
-$fecha = $_POST['fecha'] ?? '';
-$email = $_POST['email'] ?? '';
+                        if ($conn->connect_error) {
+                                die("Database connection failed: " . $conn->connect_error);
+                        }
 
-// Aquí suponemos que el usuario está identificado y tenemos su ID (p. ej. en sesión)
-session_start();
-if (!isset($_SESSION['user_id'])) {
-    echo "Error: no hay sesión activa.";
-    exit;
-}
+                        $comando = "SELECT `nombre`,`dni`,`telefono`,`fecha`, `contrasena` FROM `usuarios` WHERE `email`='" . $_GET["user"] . "';";
 
-$user_id = $_SESSION['user_id'];
+                        $query = mysqli_query($conn, $comando) or die (mysqli_error($conn));
 
-// --- 3. Validación simple ---
-if (!preg_match("/^[0-9]{8}-[A-Z]$/", $dni)) {
-    die("DNI no válido.");
-}
+                        if ($row = mysqli_fetch_array($query))
+                        {
+                                $nombre = $row["nombre"];
+                                $email = $_GET["user"];
+                                $dni = $row["dni"];
+                                $telefono = $row["telefono"];
+                                $fecha = $row["fecha"];
+                                $contrasena = $row["contrasena"];
+                        }
 
-if (!preg_match("/^[0-9]{9}$/", $telefono)) {
-    die("Teléfono no válido.");
-}
+                        $conn->close();
+                }
+        }
 
-if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    die("Email no válido.");
-}
-
-// --- 4. Actualizar datos ---
-$sql = "UPDATE usuarios SET 
-            nombre = ?, 
-            dni = ?, 
-            telefono = ?, 
-            fecha_nacimiento = ?, 
-            email = ?,
-            contrasena = ?,
-        WHERE id = ?";
-
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("sssssi", $nombre, $dni, $telefono, $fecha, $email, $contrasena, $user_id);
-
-if ($stmt->execute()) {
-    echo "<h3>Datos actualizados correctamente ✅</h3>";
-    echo "<a href='../index.html'>Volver al inicio</a>";
-} else {
-    echo "Error al actualizar los datos: " . $conn->error;
-}
-
-$stmt->close();
-$conn->close();
+        include "index.html";
 ?>
-
