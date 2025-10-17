@@ -41,32 +41,30 @@ CREATE TABLE `cerdo` (
 
 -- Tabla: carrera
 CREATE TABLE `carrera` (
+  `id` int(11) AUTO_INCREMENT PRIMARY KEY NOT NULL,
   `fecha` date NOT NULL,
   `nombre` varchar(40) NOT NULL,
-  `ubicacion` text NOT NULL,
-  PRIMARY KEY (`fecha`, `nombre`)
+  `ubicacion` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Tabla: participante
 CREATE TABLE `participante` (
   `cerdo` int(11) NOT NULL,
-  `fechaCarrera` date NOT NULL,
-  `nombreCarrera` varchar(40) NOT NULL,
-  PRIMARY KEY (`cerdo`, `fechaCarrera`, `nombreCarrera`),
+  `idCarrera` int(11) NOT NULL,
+  PRIMARY KEY (`cerdo`, `idCarrera`),
   FOREIGN KEY (`cerdo`) REFERENCES `cerdo`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (`fechaCarrera`, `nombreCarrera`) REFERENCES `carrera`(`fecha`, `nombre`) ON DELETE CASCADE ON UPDATE CASCADE
+  FOREIGN KEY (`idCarrera`) REFERENCES `carrera`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Tabla: apuesta
 CREATE TABLE `apuesta` (
   `cerdo` int(11) NOT NULL,
-  `fechaCarrera` date NOT NULL,
-  `nombreCarrera` varchar(40) NOT NULL,
+  `idCarrera` int(11) NOT NULL,
   `idUs` int(11) NOT NULL,
   `cantidad` decimal(10,2) NOT NULL,
-  PRIMARY KEY (`cerdo`, `fechaCarrera`, `nombreCarrera`, `idUs`),
+  PRIMARY KEY (`cerdo`, `idCarrera`, `idUs`),
   FOREIGN KEY (`cerdo`) REFERENCES `cerdo`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (`fechaCarrera`, `nombreCarrera`) REFERENCES `carrera`(`fecha`, `nombre`) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (`idCarrera`) REFERENCES `carrera`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (`idUs`) REFERENCES `usuarios`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -82,24 +80,33 @@ INSERT INTO `cerdo` (`id`, `nombre`, `peso`, `especie`, `color`) VALUES
 (8, 'As', 250.00, 'Mangalica', 'Gris');
 
 -- Datos de ejemplo para la tabla carrera
-INSERT INTO `carrera` (`fecha`, `nombre`, `ubicacion`) VALUES
-('2025-10-31', 'Marcarrera especial Halloween', 'Sonora'),
-('2025-12-20', 'Carrera nacional', 'Badajoz'),
-('2026-01-10', 'Marcarrera especial Navidad', 'Bilbao'),
-('2026-03-22', 'Mundial', 'Australia');
+INSERT INTO `carrera` (`id`, `fecha`, `nombre`, `ubicacion`) VALUES
+(1, '2025-10-31', 'Marcarrera especial Halloween', 'Sonora'),
+(2, '2025-12-20', 'Carrera nacional', 'Badajoz'),
+(3, '2026-01-10', 'Marcarrera especial Navidad', 'Bilbao'),
+(4, '2026-03-22', 'Mundial', 'Australia');
 
 -- Datos de ejemplo para la tabla participante
-INSERT INTO `participante` (`cerdo`, `fechaCarrera`, `nombreCarrera`) VALUES
-(2, '2025-10-31', 'Marcarrera especial Halloween'),
-(3, '2025-10-31', 'Marcarrera especial Halloween'),
-(5, '2025-10-31', 'Marcarrera especial Halloween'),
-(7, '2025-10-31', 'Marcarrera especial Halloween'),
-(6, '2025-10-31', 'Marcarrera especial Halloween');
+INSERT INTO `participante` (`cerdo`, `idCarrera`) VALUES
+(2, 1),
+(3, 1),
+(5, 1),
+(7, 1),
+(6, 1);
 
 -- Ejemplo comentado para insertar usuarios
--- INSERT INTO `usuarios` (`id`, `nombre`, `contrasena`, `dni`, `telefono`, `fecha`, `email`) VALUES
--- (1, 'mikel', '1234', '12345678A', 600123456, '2025-10-01', 'mikel@example.com'),
--- (2, 'aitor', '5678', '87654321B', 611987654, '2025-10-05', 'aitor@example.com');
+INSERT INTO `usuarios` (`id`, `nombre`, `contrasena`, `dni`, `telefono`, `fecha`, `email`) VALUES
+(1, 'mikel', '1234', '12345678A', 600123456, '2025-10-01', 'mikel@example.com'),
+(2, 'aitor', '5678', '87654321B', 611987654, '2025-10-05', 'aitor@example.com');
+
+
+-- Datos de ejemplo para la apuestas
+INSERT INTO `apuesta` (`cerdo`, `idCarrera`, `idUs`, `cantidad`) VALUES
+(2, 1, 1, 50),
+(3, 1, 1, 100),
+(5, 1, 1, 34);
+
+
 
 -- Restaurar codificación original
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
