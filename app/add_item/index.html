@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Registro de Usuario</title>
+  <script src="registro.js" defer></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      position: relative; /* necesario para posicionar el enlace */
+    }
+    .container {
+      text-align: center;
+      background: white;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      max-width: 400px;
+      width: 100%;
+    }
+    h1 {
+      margin-bottom: 30px;
+    }
+    button {
+      display: block;
+      margin: 15px auto;
+      background: #4CAF50;
+      color: white;
+      padding: 16px 40px;
+      border-radius: 5px;
+      font-size: 18px;
+      border: none;
+      cursor: pointer;
+      width: fit-content;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background: #45a049;
+    }
+    input {
+      display: block;
+      margin: 15px auto;
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1.5px solid #4CAF50;
+      width: 300px;
+      box-sizing: border-box;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+    input:focus {
+      border-color: #388E3C;
+      box-shadow: 0 0 5px #4CAF50;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Carreras:</h1>
+
+    <?php
+    $host = "proyectoseguridad-db-1";
+    $usuario = "admin";
+    $clave = "test";
+    $bd = "database";
+
+    $conn = new mysqli($host, $usuario, $clave, $bd);
+
+    if ($conn->connect_error) {
+        die("Error de conexión: " . $conn->connect_error);
+    }
+
+    // Ajuste: se usan los nombres 'cerdo' y 'idCarrera' en participante
+    $sql = "
+        SELECT
+            ca.id AS carrera_id,
+            ca.nombre AS carrera_nombre,
+            ca.fecha AS carrera_fecha,
+            ce.id AS cerdo_id,
+            ce.nombre AS cerdo_nombre
+        FROM
+            carrera ca
+        JOIN participante p ON ca.id = p.idCarrera
+        JOIN cerdo ce ON ce.id = p.cerdo
+        ORDER BY
+            ca.id, ce.id
+    ";
+
+    $result = $conn->query($sql);
+
+    if ($result === false) {
+        echo "Error en la consulta: " . $conn->error;
+    } else {
+        $carrera_actual = null;
+
+        while ($row = $result->fetch_assoc()) {
+            // Si es una nueva carrera, mostramos su información
+            if ($carrera_actual !== $row['carrera_id']) {
+                if ($carrera_actual !== null) {
+                    echo "<br>"; // Separador entre carreras
+                }
+                echo "<strong> <u>Carrera ID: " . $row['carrera_id'] . "</u></strong><br>";
+                echo " " . $row['carrera_nombre'] . "<br>";
+                echo "Fecha: " . $row['carrera_fecha'] . "<br>";
+                echo "<strong>Cerdos participantes:</strong><br>";
+                $carrera_actual = $row['carrera_id'];
+            }
+
+            // Mostrar cada cerdo participante
+            echo "- Cerdo ID: " . $row['cerdo_id'] . ", " . $row['cerdo_nombre'] . "<br>";
+        }
+    }
+
+    $conn->close();
+    ?>
+
+  </div>
+  <div class="container">
+    <h1>Añadir nueva apuesta</h1>
+    
+    <?php
+    $email = $_GET['user'] ?? '';
+    ?>
+
+    <form id="add_form" action="procesar_adicion.php" method="POST">
+      <input type="hidden" name="user" value="<?= htmlspecialchars($email) ?>">
+
+      <label for="cerdo">Id Cerdo:</label>
+      <input type="number" id="cerdo" name="cerdo" required />
+
+      <label for="idCarrera">Id Carrera:</label>
+      <input type="number" id="idCarrera" name="idCarrera" required />
+
+      <label for="cantidad">Cantidad (€):</label>
+      <input type="number" id="cantidad" name="cantidad" required />
+
+      <button id="add_summit" type="submit">Añadir apuesta</button>
+    </form>
+  </div>
+</body>
+</html>

@@ -41,11 +41,10 @@
 <body>
 
   <div class="container">
-
-    <a href=" . "/add_item/add_item.php?user=" . $email . ">Añadir apuesta</a>
-    <a href=" . "/delete_item/delete_item.php?user=" . $email . ">Eliminar apuesta</a>
     <?php
-    echo "<a href=" . "/items/show_items.php?user=" . $email . ">Ver Apuestas</a>";
+    echo "<a href=" . "/add_item/add_item.php?user=" . urlencode($email) . ">Añadir apuesta</a>";
+    echo "<a href=" . "/delete_item/delete_item.php?user=" . urlencode($email) . ">Eliminar apuesta</a>";
+    echo "<a href=" . "/items/show_items.php?user=" . urlencode($email) . ">Ver Apuestas</a>";
     ?>
 
   </div>

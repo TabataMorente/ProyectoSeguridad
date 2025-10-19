@@ -62,6 +62,7 @@ CREATE TABLE `apuesta` (
   `idCarrera` int(11) NOT NULL,
   `idUs` int(11) NOT NULL,
   `cantidad` decimal(10,2) NOT NULL,
+  `id` int(11) AUTO_INCREMENT NOT NULL UNIQUE,
   PRIMARY KEY (`cerdo`, `idCarrera`, `idUs`),
   FOREIGN KEY (`cerdo`) REFERENCES `cerdo`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (`idCarrera`) REFERENCES `carrera`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -92,7 +93,12 @@ INSERT INTO `participante` (`cerdo`, `idCarrera`) VALUES
 (3, 1),
 (5, 1),
 (7, 1),
-(6, 1);
+(6, 1),
+(3, 2),
+(4, 2),
+(1, 1),
+(7, 3),
+(6, 3);
 
 -- Ejemplo comentado para insertar usuarios
 INSERT INTO `usuarios` (`id`, `nombre`, `contrasena`, `dni`, `telefono`, `fecha`, `email`) VALUES
