@@ -4,19 +4,21 @@ Linux + Apache + MariaDB (MySQL) + PHP 7.2 on Docker Compose. Mod_rewrite enable
 
 ## Instructions
 
-Enter the following command to start your containers:
+Primero hay que construir la imagen "web" en docker:
+
 ```bash
-docker-compose up -d
+docker build -t="web" .
 ```
 
-To stop them, use this:
+Introduce el siguiente comando para iniciar docker:
 ```bash
-docker-compose stop
+docker compose up -d
 ```
 
-Feel free to make pull requests and help to improve this.
-
-If you are looking for phpMyAdmin, take a look at [this](https://github.com/celsocelante/docker-lamp/issues/2).
+Para pararlo:
+```bash
+docker compose stop
+```
 
 ## Integrantes del grupo:
 Laura Calvo <br>

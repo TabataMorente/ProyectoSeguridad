@@ -37,7 +37,6 @@ $sql_validacion = "
     SELECT 1 
     FROM participante 
     WHERE cerdo = '$cerdo' AND idCarrera = '$idCarrera'
-    LIMIT 1
 ";
 $result_validacion = $conn->query($sql_validacion);
 

@@ -19,13 +19,14 @@ $sql = "
         ap.cantidad AS cantidad_apostada,
         ap.id AS id_apuesta,
         ap.cerdo AS id_cerdo,
-        ap.idCarrera AS id_carrera
+        ap.idCarrera AS id_carrera,
+        us.nombre AS nombre_usuario
     FROM
         apuesta ap
     JOIN cerdo ce ON ap.cerdo = ce.id
     JOIN carrera ca ON ap.idCarrera = ca.id
-    WHERE
-        ap.idUs = (SELECT id FROM usuarios WHERE email = '" . $conn->real_escape_string($_GET['user']) . "')
+    JOIN usuarios us ON ap.idUs = us.id
+    ORDER BY ap.idCarrera ASC
 ";
 
 $result = $conn->query($sql);
@@ -33,15 +34,40 @@ $result = $conn->query($sql);
 if ($result === false) {
     echo "Error en la consulta: " . $conn->error;
 } else {
+    echo "<style>
 
+            .fila {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            }
+
+            .container {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: 100%;
+            }
+
+          </style>";
+    echo "<body>";
+    echo "<div class='fila'>";
     while ($row = $result->fetch_assoc()) {
-        echo "<strong> Apuesta número " . $row['id_apuesta'] . "</strong><br>";
+        echo "<div class='container'>";
+        echo "<h3><strong> Apuesta número " . $row['id_apuesta'] . "</strong></h3>";
+        echo "Usuario: " . $row['nombre_usuario'] . "<br>";
         echo "Cerdo número " . $row['id_cerdo'] . ": " . $row['nombre_cerdo'] . "<br>";
         echo "Carrera número " . $row['id_carrera'] . ": " . $row['nombre_carrera'] . "<br>";
         echo "Fecha: " . $row['fecha_carrera'] . "<br>";
         echo "Cantidad apostada: " . $row['cantidad_apostada'] . "<br><br>";
+        echo "</div>";
         $contador++; // Incrementa el contador
     }
+    echo "</body>";
 }
 
 $conn->close();
