@@ -52,6 +52,7 @@ $sql_apuesta = "
 
 if ($conn->query($sql_apuesta) === TRUE) {
     echo "✅ Apuesta registrada correctamente.";
+    echo "<a href=" . "/items/items.php?user=" . $email . ">  Volver</a>";
 } else {
     echo "❌ Error al registrar la apuesta: " . $conn->error;
 }

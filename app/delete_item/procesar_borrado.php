@@ -54,10 +54,10 @@ $sql_apuesta = "
 
 if ($conn->query($sql_apuesta) === TRUE) {
     echo "✅ Apuesta eliminada correctamente.";
-    echo "<a href=" . "/pagUsuario/pagUsuario.php?user=" . $email . ">  Volver</a>";
+    echo "<a href=" . "/items/items.php?user=" . $email . ">  Volver</a>";
 } else {
     echo "❌ Error al eliminar la apuesta: " . $conn->error;
-    echo "<a href=" . "/pagUsuario/pagUsuario.php?user=" . $email . ">  Volver</a>";
+    echo "<a href=" . "/items/items.php?user=" . $email . ">  Volver</a>";
 }
 
 $conn->close();
