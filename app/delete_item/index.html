@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8">
+		<title>Eliminar Apuesta</title>
+		<link rel="stylesheet" type="text/css" href="delete_index.css">
+	</head>
+	<body>
+		<div class="container">
+			<h1>Eliminar Apuesta</h1>
+			<?php
+				if ( $lista_apuestas == null )
+				{
+					echo "<p>No se pudieron cargar la lista de apuestas que tienes.</p>";
+				}
+				else
+				{
+					$longitud = count($lista_apuestas);
+					$indice = 0;
+				
+					while ( $indice < $longitud )
+					{
+						echo $lista_apuestas[$indice];
+						$indice += 1;
+					}
+				}
+				
+			?>
+		</div>
+	</body>
+</html>
