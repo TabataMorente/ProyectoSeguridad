@@ -5,26 +5,67 @@
 		<title>Eliminar Apuesta</title>
 		<link rel="stylesheet" type="text/css" href="delete_index.css">
 	</head>
-	<style>
+	  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .fila {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+      }
+    .container {
+      text-align: center;
+      background: white;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+    h1 {
+      margin-bottom: 30px;
+    }
+    button {
+      display: block;
+      margin: 15px auto;
+      background: #4CAF50;
+      color: white;
+      padding: 16px 40px;
+      border-radius: 5px;
+      font-size: 18px;
+      border: none;
+      cursor: pointer;
+      width: fit-content;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background: #45a049;
+    }
+    input {
+      display: block;
+      margin: 15px auto;
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1.5px solid #4CAF50;
+      width: 300px;
+      box-sizing: border-box;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+    input:focus {
+      border-color: #388E3C;
+      box-shadow: 0 0 5px #4CAF50;
+    }
 
-            .fila {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-            }
-
-            .container {
-            text-align: center;
-            background: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.1);
-            max-width: 400px;
-            width: 100%;
-            }
-
-    </style>
+  </style>
 	<body>
 		<div class="container">
 			<h1>Eliminar Apuesta</h1>
@@ -83,16 +124,19 @@ echo "</div>";
 $email=$_GET["user"];
 echo "<form id='delete_form' action='procesar_borrado.php?user=$email' method='POST'>";
 ?>
-		</div>
+  </div>
+   &nbsp; &nbsp; &nbsp;
+  <div class="container">
+    <h1>Borrar una apuesta</h1>
 	<form id="delete_form" action="procesar_borrado.php" method="POST">
       <input type="hidden" name="user" value="<?= htmlspecialchars($email) ?>">
 
 
-      <label for="idApuesta">Id Apuesta</label>
+      <label for="idApuesta">Id Apuesta:</label>
       <input type="number" id="idApuesta" name="idApuesta" required />
 
 
-      <button id="item_delete_summit" type="submit">Borrar apuesta</button>
+      <button id="item_delete_summit" type="submit">Eliminar</button>
     </form>	
 	</body>
 </html>
