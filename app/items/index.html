@@ -39,23 +39,15 @@
   </style>
 </head>
 <body>
-   
-  <div class="container">
-	<?php
-		if ($nombre)
-		{
-			$resultado = "<h1> Bienvenido, " . $nombre . "<h1>";
-			echo $resultado;
-		}
 
-		if ($email and $email !== "null")
-		{
-        echo "<a href=" . "/modify_user/modify_user.php?user=" . urlencode($email) . ">Modificar Datos</a>";
-  		  echo "<a href=" . "/items/items.php?user=" . urlencode($email) . ">Apuestas</a>";
-		}
-	?>
-    <!--<h1>Los MontaMarcos</h1>--!>
-    <!-- Luego aqui se pondrian las demas opciones, como por ejemplo lista de cerdos y asi -->
+  <div class="container">
+    <?php
+    echo "<a href=" . "/add_item/add_item.php?user=" . urlencode($email) . ">Añadir apuesta</a>";
+    echo "<a href=" . "/delete_item/delete_item.php?user=" . urlencode($email) . ">Eliminar apuesta</a>";
+    echo "<a href=" . "/items/show_items.php?user=" . urlencode($email) . ">Ver Apuestas</a>";
+    echo "<a href='../pagUsuario/pagUsuario.php?user=" . urlencode($email) . "'>Volver</a>";
+    ?>
+
   </div>
 </body>
 </html>

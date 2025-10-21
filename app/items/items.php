@@ -6,6 +6,7 @@
         $telefono = "null";
         $fecha = "null";
         $contrasena = "null";
+
         if ( $_SERVER['REQUEST_METHOD'] === "GET")
         {
                 if ( isset($_GET["user"]) )

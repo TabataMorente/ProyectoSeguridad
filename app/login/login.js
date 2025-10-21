@@ -8,12 +8,12 @@ function iniciar_sesion() {
 	if ( !nombre )
 	{
 		validar = false;
-		mostrarError("nombre", "nombre de usuario incorrecto.");
+		mostrarError("nombre", "nombre de usuario sin definir.");
 	}
 	else if ( !contrasena )
 	{
 		validar = false;
-		mostrarError("contrasena", "contraseña incorrecta.");
+		mostrarError("contrasena", "contraseña sin definir.");
 	}
 
 	if ( validar )

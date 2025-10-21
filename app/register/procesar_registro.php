@@ -24,6 +24,7 @@ if ($conn->query($sql) === TRUE) {
 } else {
     // En un entorno real no deberías mostrar $conn->error a usuarios finales
     echo "❌ Error al insertar: " . $conn->error;
+    echo "<a href='index.html'>  Volver</a>";
 }
 
 $conn->close();

@@ -21,6 +21,18 @@
 
     </form>
   </div>
-
+<script>
+  // Detecta si la URL tiene ?error=1 y muestra una alerta
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('error') === '1') {
+    alert('Usuario incorrecto');
+  }
+  else if (params.get('error') === '2') {
+    alert('Contraseña incorrecta');
+  }
+  // Limpia la URL para que no se repita la alerta al refrescar
+  const cleanUrl = window.location.origin + window.location.pathname;
+  window.history.replaceState({}, document.title, cleanUrl);
+</script>
 </body>
 </html>

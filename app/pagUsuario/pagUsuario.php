@@ -1,5 +1,4 @@
 <?php
-
         $nombre = "null";
         $email = "null";
 
@@ -20,7 +19,6 @@
                         }
 
                         $comando = "SELECT `nombre` FROM `usuarios` WHERE `email`='" . $_GET["user"] . "';";
-
                         $query = mysqli_query($conn, $comando) or die (mysqli_error($conn));
 
                         if ($row = mysqli_fetch_array($query))

@@ -38,10 +38,11 @@ $sql = "UPDATE usuarios
 
 if ($conn->query($sql) === TRUE) {
     echo "✅ Modificacion completada correctamente (inseguro).";
-    echo "<a href='../pagUsuario/pagUsuario.php?user=$email'>  Pagina principal</a>";
+    echo "<a href='../pagUsuario/pagUsuario.php?user=$email'>  Volver</a>";
 } else {
     // En un entorno real no deberías mostrar $conn->error a usuarios finales
     echo "❌ Error al insertar: " . $conn->error;
+    echo "<a href='../pagUsuario/pagUsuario.php?user=$emailAnt'>  Volver</a>";
 }
 
 $conn->close();
