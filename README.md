@@ -37,7 +37,7 @@ Dentro de la cuenta, se muestran las siguientes opciones:
 * Apuestas: Se encarga de las gestiones de apuestas.
 
 En la página de Apuestas se ofrecen las siguientes opciones:
-* Añadir apuesta: Apartir de los cerdos disponibles y las carreras disponibles, permite apostar al usuario una cantidad de dinero por un cerdo en una carrera espécifica, si el cerdo no participa en una carrera no te dejará apostar por ese cerdo en esa carrera.
+* Añadir apuesta: A partir de los cerdos disponibles y las carreras disponibles, permite apostar al usuario una cantidad de dinero por un cerdo en una carrera espécifica, si el cerdo no participa en una carrera no te dejará apostar por ese cerdo en esa carrera.
 * Eliminar apuesta: Borra una apuesta realizada por el usuario con el que se ha iniciado sesión.
 * Ver apuestas: Permite ver todas las apuestas registradas por todos los usuarios en el momento.
 * Volver: Vuelves a la página del usuario.
