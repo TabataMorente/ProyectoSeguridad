@@ -35,6 +35,7 @@ $result = $conn->query($sql);
 if ($result === false) {
     echo "Error en la consulta: " . $conn->error;
 } else {
+    echo "<title>Los MontaMarcos - Mostrar apuestas</title>";
     echo "<style>
 
             .fila {
@@ -84,16 +85,23 @@ if ($result === false) {
           </style>";
     echo "<body>";
     echo "<div class='fila'>";
-    while ($row = $result->fetch_assoc()) {
-        echo "<div class='container'>";
-        echo "<h3><strong> Apuesta número " . $row['id_apuesta'] . "</strong></h3>";
-        echo "Usuario: " . $row['nombre_usuario'] . "<br>";
-        echo "Cerdo número " . $row['id_cerdo'] . ": " . $row['nombre_cerdo'] . "<br>";
-        echo "Carrera número " . $row['id_carrera'] . ": " . $row['nombre_carrera'] . "<br>";
-        echo "Fecha: " . $row['fecha_carrera'] . "<br>";
-        echo "Cantidad apostada: " . $row['cantidad_apostada'] . "<br><br>";
-        echo "</div>";
-        $contador++; // Incrementa el contador
+    if ($result->num_rows === 0) {
+    echo "<p style='text-align:center; font-family:Arial; font-size:18px; color:#555; margin-top:50px;'>
+            No hay apuestas registradas actualmente.
+          </p>";
+    }
+    else{
+        while ($row = $result->fetch_assoc()) {
+            echo "<div class='container'>";
+            echo "<h3><strong> Apuesta número " . $row['id_apuesta'] . "</strong></h3>";
+            echo "Usuario: " . $row['nombre_usuario'] . "<br>";
+            echo "Cerdo número " . $row['id_cerdo'] . ": " . $row['nombre_cerdo'] . "<br>";
+            echo "Carrera número " . $row['id_carrera'] . ": " . $row['nombre_carrera'] . "<br>";
+            echo "Fecha: " . $row['fecha_carrera'] . "<br>";
+            echo "Cantidad apostada: " . $row['cantidad_apostada'] . "<br><br>";
+            echo "</div>";
+            $contador++; // Incrementa el contador
+        }
     }
     echo "<div class='volver-container'>";
     echo "<a href=" . "/items/items.php?user=" . urlencode($email) . ">Volver</a>";
