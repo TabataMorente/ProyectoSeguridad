@@ -4,6 +4,36 @@ $usuario = "admin";
 $clave = "test";
 $bd = "database";
 
+echo " 
+    <style>
+    .volver-container {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      color: #333;
+      gap: 5px;
+    }
+
+    .volver-container a {
+      background: #4CAF50;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    .volver-container a:hover {
+      background: #45a049;
+    }
+    </style>";
+
 $conn = new mysqli($host, $usuario, $clave, $bd);
 if ($conn->connect_error) {
     die("❌ Error de conexión: " . $conn->connect_error);
@@ -29,7 +59,9 @@ $cantidad  = isset($_POST['cantidad'])  ? $conn->real_escape_string($_POST['cant
 
 if (empty($cerdo) || empty($idCarrera) || empty($cantidad)) {
     echo "❌ Faltan datos del formulario.";
-    echo "<a href=" . "/items/items.php?user=" . $email . ">  Volver</a>";
+    echo "<div class='volver-container'>";
+    echo "<a href=" . "add_item.php?user=" . urlencode($email) . ">Volver</a>";
+    echo "</div>";
     exit;
 }
 
@@ -43,7 +75,9 @@ $result_validacion = $conn->query($sql_validacion);
 
 if (!$result_validacion || $result_validacion->num_rows === 0) {
     echo "❌ Error: El cerdo no participa en la carrera seleccionada.";
-    echo "<a href=" . "/items/items.php?user=" . $email . ">  Volver</a>";
+    echo "<div class='volver-container'>";
+    echo "<a href=" . "add_item.php?user=" . urlencode($email) . ">Volver</a>";
+    echo "</div>";
     exit;
 }
 
@@ -54,11 +88,14 @@ $sql_apuesta = "
 
 if ($conn->query($sql_apuesta) === TRUE) {
     echo "✅ Apuesta registrada correctamente.";
-    echo "<a href=" . "/items/items.php?user=" . $email . ">  Volver</a>";
+    echo "<div class='volver-container'>";
+    echo "<a href=" . "add_item.php?user=" . urlencode($email) . ">Volver</a>";
+    echo "</div>";
 } else {
     echo "❌ Error al registrar la apuesta: " . $conn->error;
-    echo "<a href=" . "/items/items.php?user=" . $email . ">  Volver</a>";
-}
+    echo "<div class='volver-container'>";
+    echo "<a href=" . "add_item.php?user=" . urlencode($email) . ">Volver</a>";
+    echo "</div>";}
 
 $conn->close();
 ?>

@@ -2,7 +2,7 @@
 <html lang="es">
 	<head>
 		<meta charset="UTF-8">
-		<title>Eliminar Apuesta</title>
+		<title>Los MontaMarcos - Borrar apuestas</title>
 		<link rel="stylesheet" type="text/css" href="delete_index.css">
 	</head>
 	  <style>
@@ -20,7 +20,8 @@
         flex-wrap: wrap;
         justify-content: center;
         gap: 20px;
-      }
+        width: 1100px;
+    }
     .container {
       text-align: center;
       background: white;
@@ -65,10 +66,36 @@
       box-shadow: 0 0 5px #4CAF50;
     }
 
+    .volver-container {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      color: #333;
+      gap: 5px;
+    }
+
+    .volver-container a {
+      background: #4CAF50;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    .volver-container a:hover {
+      background: #45a049;
+    }
   </style>
 	<body>
 		<div class="container">
-			<h1>Eliminar Apuesta</h1>
+			<h1>Mis apuestas</h1>
 			<?php
 $host = "proyectoseguridad-db-1";
 $usuario = "admin";
@@ -138,5 +165,12 @@ echo "<form id='delete_form' action='procesar_borrado.php?user=$email' method='P
 
       <button id="item_delete_summit" type="submit">Eliminar</button>
     </form>	
+
+  <div class="volver-container">
+    <?php
+    echo "<a href=" . "/items/items.php?user=" . urlencode($email) . ">Volver</a>";
+    ?>
+  </div>
 	</body>
+
 </html>

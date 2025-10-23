@@ -4,6 +4,35 @@ $usuario = "admin";
 $clave = "test";
 $bd = "database";
 
+echo " 
+    <style>
+    .volver-container {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      color: #333;
+      gap: 5px;
+    }
+
+    .volver-container a {
+      background: #4CAF50;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    .volver-container a:hover {
+      background: #45a049;
+    }
+    </style>";
 $conn = new mysqli($host, $usuario, $clave, $bd);
 
 if ($conn->connect_error) {
@@ -38,12 +67,15 @@ $sql = "UPDATE usuarios
 
 if ($conn->query($sql) === TRUE) {
     echo "✅ Modificacion completada correctamente (inseguro).";
-    echo "<a href='../pagUsuario/pagUsuario.php?user=$email'>  Volver</a>";
+    echo "<div class='volver-container'>";
+    echo "<a href=" . "modify_datos.php?user=" . urlencode($email) . ">Volver</a>";
+    echo "</div>";
 } else {
     // En un entorno real no deberías mostrar $conn->error a usuarios finales
     echo "❌ Error al insertar: " . $conn->error;
-    echo "<a href='../pagUsuario/pagUsuario.php?user=$emailAnt'>  Volver</a>";
-}
+    echo "<div class='volver-container'>";
+    echo "<a href=" . "modify_datos.php?user=" . urlencode($emailAnt) . ">Volver</a>";
+    echo "</div>";}
 
 $conn->close();
 ?>

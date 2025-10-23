@@ -3,6 +3,7 @@ $host = "proyectoseguridad-db-1";
 $usuario = "admin";
 $clave = "test";
 $bd = "database";
+$email = isset($_GET['user']) ? $_GET['user'] : '';
 
 $conn = new mysqli($host, $usuario, $clave, $bd);
 
@@ -37,20 +38,47 @@ if ($result === false) {
     echo "<style>
 
             .fila {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 20px;
             }
 
             .container {
-            text-align: center;
-            background: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.1);
-            max-width: 400px;
-            width: 100%;
+                text-align: center;
+                background: white;
+                padding: 40px;
+                border-radius: 10px;
+                box-shadow: 0 0 15px rgba(0,0,0,0.1);
+                max-width: 400px;
+                width: 100%;
+            }
+
+            .volver-container {
+                position: absolute;
+                top: 10px;
+                right: 20px;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+                font-family: Arial, sans-serif;
+                font-size: 16px;
+                color: #333;
+                gap: 5px;
+            }
+
+            .volver-container a {
+                background: #4CAF50;
+                color: white;
+                padding: 8px 16px;
+                border-radius: 5px;
+                text-decoration: none;
+                font-weight: bold;
+                transition: background 0.3s ease;
+            }
+
+            .volver-container a:hover {
+                background: #45a049;
             }
 
           </style>";
@@ -67,6 +95,9 @@ if ($result === false) {
         echo "</div>";
         $contador++; // Incrementa el contador
     }
+    echo "<div class='volver-container'>";
+    echo "<a href=" . "/items/items.php?user=" . urlencode($email) . ">Volver</a>";
+    echo "</div>";
     echo "</body>";
 }
 

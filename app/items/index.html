@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Los MontaMarcos - Home</title>
+  <title>Los MontaMarcos - Apuestas</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -36,18 +36,48 @@
     a:hover {
       background: #45a049;
     }
+    .volver-container {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      color: #333;
+      gap: 5px;
+    }
+
+    .volver-container a {
+      background: #4CAF50;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    .volver-container a:hover {
+      background: #45a049;
+    }
   </style>
 </head>
 <body>
 
   <div class="container">
     <?php
-    echo "<a href=" . "/add_item/add_item.php?user=" . urlencode($email) . ">Añadir apuesta</a>";
-    echo "<a href=" . "/delete_item/delete_item.php?user=" . urlencode($email) . ">Eliminar apuesta</a>";
+    echo "<a href=" . "/add_item/add_item.php?user=" . urlencode($email) . ">Añadir Apuesta</a>";
+    echo "<a href=" . "/delete_item/delete_item.php?user=" . urlencode($email) . ">Eliminar Apuesta</a>";
     echo "<a href=" . "/items/show_items.php?user=" . urlencode($email) . ">Ver Apuestas</a>";
-    echo "<a href='../pagUsuario/pagUsuario.php?user=" . urlencode($email) . "'>Volver</a>";
     ?>
 
+  </div>
+  <div class="volver-container">
+    <?php
+    echo "<a href=" . "/pagUsuario/pagUsuario.php?user=" . urlencode($email) . ">Volver</a>";
+    ?>
   </div>
 </body>
 </html>

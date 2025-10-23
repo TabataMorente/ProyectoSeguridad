@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Modificar mis datos</title>
+  <title>Los MontaMarcos - Modificar mis datos</title>
   <script src="validar_modificar.js" defer></script>
   <style>
     body {
@@ -99,7 +99,7 @@
 <body>
   <div class="volver-container">
     <?php
-    echo "<a href='../pagUsuario/pagUsuario.php?user=" . urlencode($email) . "'>Volver al inicio</a>";
+    echo "<a href='../pagUsuario/pagUsuario.php?user=urlencode($email)'>Volver al inicio</a>";
     ?>
   </div>
 
@@ -107,7 +107,7 @@
     <h1>Modificar mis datos</h1>
       <?php
 
-                echo "<form id='user_modify_form' action='modify_datos.php?user=" . urlencode($email) . "' method='POST'>";
+                echo "<form id='user_modify_form' action='modify_datos.php?user=$email' method='POST'>";
                 echo "<label for='nombre'>Nombre y Apellidos:</label>";
                 if ($nombre)
                 {
