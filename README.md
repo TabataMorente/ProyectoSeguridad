@@ -33,11 +33,11 @@ El sitio web sirve para gestionar apuestas de carreras de cerdos asociadas a una
 Para ello, primero de todo, hace falta crear una cuenta, en caso de no tener una, e iniciar sesión.<br>
 
 Dentro de la cuenta, se muestran las siguientes opciones:
-* Modificar Datos: El usuario tiene ala opción de cambiar la información que añadió al registrarse.
+* Modificar Datos: El usuario tiene la opción de cambiar la información que añadió al registrarse.
 * Apuestas: Se encarga de las gestiones de apuestas.
 
 En la página de Apuestas se ofrecen las siguientes opciones:
-* Añadir apuesta: Apartir de los cerdos disponibles y las carreras disponibles, permite apostar al usuario una cantidad de dinero.
+* Añadir apuesta: A partir de los cerdos disponibles y las carreras disponibles, permite apostar al usuario una cantidad de dinero por un cerdo en una carrera espécifica, si el cerdo no participa en una carrera no te dejará apostar por ese cerdo en esa carrera.
 * Eliminar apuesta: Borra una apuesta realizada por el usuario con el que se ha iniciado sesión.
 * Ver apuestas: Permite ver todas las apuestas registradas por todos los usuarios en el momento.
 * Volver: Vuelves a la página del usuario.
