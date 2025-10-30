@@ -33,6 +33,10 @@ echo "
     }
     </style>";
 
+
+
+$idApuesta = $_POST['id'] ?? null;
+
 $conn = new mysqli($host, $usuario, $clave, $bd);
 if ($conn->connect_error) {
     die("❌ Error de conexión: " . $conn->connect_error);
@@ -47,6 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
+// Obtener el email del usuario desde el formulario o la URL
 $email = $_POST['user'] ?? null;
 $sql_usuario = "SELECT id FROM usuarios WHERE email = '$email'";
 $result_usuario = $conn->query($sql_usuario);
@@ -58,8 +63,6 @@ if (!$result_usuario || $result_usuario->num_rows === 0) {
     exit;
 }
 $idUs = $result_usuario->fetch_assoc()['id'];
-
-$idApuesta = isset($_POST['idApuesta']) ? $conn->real_escape_string($_POST['idApuesta']) : '';
 
 if (empty($idApuesta)) {
     echo "❌ Faltan datos del formulario.";
