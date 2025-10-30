@@ -39,7 +39,7 @@ if ($conn->connect_error) {
     die("Error de conexión: " . $conn->connect_error);
 }
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     echo "Método no permitido.";
     exit;
 }
@@ -68,13 +68,13 @@ $sql = "UPDATE usuarios
 if ($conn->query($sql) === TRUE) {
     echo "✅ Modificacion completada correctamente (inseguro).";
     echo "<div class='volver-container'>";
-    echo "<a href=" . "modify_datos.php?user=" . urlencode($email) . ">Volver</a>";
+    echo "<a href=" . "modify_user.php?user=" . urlencode($email) . ">Volver</a>";
     echo "</div>";
 } else {
     // En un entorno real no deberías mostrar $conn->error a usuarios finales
     echo "❌ Error al insertar: " . $conn->error;
     echo "<div class='volver-container'>";
-    echo "<a href=" . "modify_datos.php?user=" . urlencode($emailAnt) . ">Volver</a>";
+    echo "<a href=" . "modify_user.php?user=" . urlencode($emailAnt) . ">Volver</a>";
     echo "</div>";}
 
 $conn->close();
