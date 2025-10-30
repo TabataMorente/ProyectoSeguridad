@@ -130,7 +130,8 @@ $sql = "
         ap.cantidad AS cantidad_apostada,
         ap.id AS id_apuesta,
         ap.cerdo AS id_cerdo,
-        ap.idCarrera AS id_carrera
+        ap.idCarrera AS id_carrera,
+        us.nombre AS nombre_usuario
     FROM
         apuesta ap
     JOIN cerdo ce ON ap.cerdo = ce.id
