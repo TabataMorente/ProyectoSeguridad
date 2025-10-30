@@ -54,7 +54,7 @@ if (!$result_usuario || $result_usuario->num_rows === 0) {
 $idUs = $result_usuario->fetch_assoc()['id'];
 
 $cerdo     = isset($_POST['cerdo'])     ? $conn->real_escape_string($_POST['cerdo'])     : '';
-$idCarrera = isset($_POST['idCarrera']) ? $conn->real_escape_string($_POST['idCarrera']) : '';
+$idCarrera = isset($_POST['carrera']) ? $conn->real_escape_string($_POST['carrera']) : '';
 $cantidad  = isset($_POST['cantidad'])  ? $conn->real_escape_string($_POST['cantidad'])  : '';
 
 if (empty($cerdo) || empty($idCarrera) || empty($cantidad)) {

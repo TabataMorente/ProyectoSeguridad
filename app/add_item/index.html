@@ -44,7 +44,7 @@
     button:hover {
       background: #45a049;
     }
-    input {
+    input, select {
       display: block;
       margin: 15px auto;
       padding: 12px 20px;
@@ -60,6 +60,23 @@
       border-color: #388E3C;
       box-shadow: 0 0 5px #4CAF50;
     }
+    select {
+    appearance: none;           /* Oculta el estilo nativo del navegador */
+    -webkit-appearance: none;   /* Compatibilidad Safari/Chrome */
+    -moz-appearance: none;      /* Compatibilidad Firefox */
+    background-color: white;    /* Fondo uniforme */
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%234CAF50" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 12px center; /* Posición de la flecha */
+    background-size: 20px;
+    cursor: pointer;
+    }
+
+    select:focus {
+    border-color: #388E3C;
+    box-shadow: 0 0 5px #4CAF50;
+    }
+
     .volver-container {
       position: absolute;
       top: 10px;
@@ -152,7 +169,6 @@
         }
     }
 
-    $conn->close();
     ?>
 
   </div>
@@ -162,22 +178,48 @@
     
     <?php
     $email = $_GET['user'] ?? '';
+     // Consultar cerdos
+    $cerdos_query = "SELECT id, nombre FROM cerdo ORDER BY nombre ASC";
+    $cerdos_result = $conn->query($cerdos_query);
+
+    // Consultar carreras
+    $carreras_query = "SELECT id, nombre FROM carrera ORDER BY nombre ASC";
+    $carreras_result = $conn->query($carreras_query);
     ?>
 
     <form id="add_form" action="procesar_adicion.php" method="POST">
       <input type="hidden" name="user" value="<?= htmlspecialchars($email) ?>">
 
-      <label for="cerdo">Id Cerdo:</label>
-      <input type="number" id="cerdo" name="cerdo" required />
+      <label for="cerdo">Cerdos:</label>
+      <select id="cerdo" name="cerdo" required>
+        <option value="">Selecciona un cerdo</option> <!--Si ponemos que value es vacio, no se tendra en cuenta esa opcion-->
+        <?php
+        if ($cerdos_result && $cerdos_result->num_rows > 0) {
+          while ($row = $cerdos_result->fetch_assoc()) {
+            echo "<option value='" . htmlspecialchars($row['id']) . "'>" . htmlspecialchars($row['nombre']) . "</option>";
+          }
+        }
+        ?>
+      </select>
 
-      <label for="idCarrera">Id Carrera:</label>
-      <input type="number" id="idCarrera" name="idCarrera" required />
+      <label for="carrera">Carreras:</label>
+      <select id="carrera" name="carrera" required>
+        <option value="">Selecciona una carrera</option> <!--Si ponemos que value es vacio, no se tendra en cuenta esa opcion-->
+        <?php
+        if ($carreras_result && $carreras_result->num_rows > 0) {
+          while ($row = $carreras_result->fetch_assoc()) {
+            echo "<option value='" . htmlspecialchars($row['id']) . "'>" . htmlspecialchars($row['nombre']) . "</option>";
+          }
+        }
+        ?>
+      </select>
 
       <label for="cantidad">Cantidad (€):</label>
       <input type="number" id="cantidad" name="cantidad" required />
 
       <button id="item_add_summit" type="submit">Añadir apuesta</button>
     </form>
+  <?php $conn->close(); ?>
   </div>
 </body>
 </html>
