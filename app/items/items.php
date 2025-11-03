@@ -1,4 +1,5 @@
 <?php
+	include '../conexion_bd/conexion_bd.php';
 
         $nombre = "null";
         $email = "null";
@@ -12,10 +13,10 @@
                 if ( isset($_GET["user"]) )
                 {
                         // Esto es para acceder al nombre
-                        $hostname = "db";
-                        $username = "admin";
-                        $password = "test";
-                        $db = "database";
+                        $hostname = $conexion_bd[0];
+                        $username = $conexion_bd[1];
+                        $password = $conexion_bd[2];
+                        $db = $conexion_bd[3];
 
                         $conn = mysqli_connect($hostname,$username,$password,$db);
 
