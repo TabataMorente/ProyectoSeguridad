@@ -1,0 +1,4 @@
+db:db
+user:admin
+password:test
+db:database
