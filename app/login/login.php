@@ -1,5 +1,5 @@
 <?php
-	include '/conexion_bd/conexion_bd.php';
+	include '../conexion_bd/conexion_bd.php';
 	$problema = true;
 
 	if ($_SERVER['REQUEST_METHOD'] === 'GET')
@@ -11,7 +11,7 @@
 			$hostname = $conexion_bd[0];
 			$username = $conexion_bd[1];
 			$password = $conexion_bd[2];
-			$db = $conexion_bd[4];
+			$db = $conexion_bd[3];
 
 			$conn = mysqli_connect($hostname,$username,$password,$db);
 		

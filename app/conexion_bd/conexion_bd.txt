@@ -1,4 +1,4 @@
-db:db
+hostname:db
 user:admin
 password:test
 db:database
