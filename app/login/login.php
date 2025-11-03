@@ -3,7 +3,7 @@
 
 	if ($_SERVER['REQUEST_METHOD'] === 'GET')
 	{
-		if ( isset($_GET["nombre"]) and isset($_GET["contrasena"])  )
+		if ( isset($_GET["email"]) and isset($_GET["contrasena"])  )
 		{
 			// The request is using the POST method
 
@@ -18,10 +18,10 @@
 				die("Database connection failed: " . $conn->connect_error);
 			}
 		
-			$nombre = $_GET["nombre"];
+			$email = $_GET["email"];
 			$contrasena = $_GET["contrasena"];
 	
-			$comando = "SELECT `email`, `contrasena` FROM `usuarios` WHERE `email`='" . $nombre . "';";
+			$comando = "SELECT `email`, `contrasena` FROM `usuarios` WHERE `email`='" . $email . "';";
 
 			$query = mysqli_query($conn, $comando) or die (mysqli_error($conn));
 			
@@ -29,7 +29,7 @@
 			{
 				if ( $row["contrasena"] == $contrasena )
 				{
-					header("Location:/pagUsuario/pagUsuario.php?user=" . urlencode($nombre));
+					header("Location:/pagUsuario/pagUsuario.php?user=" . urlencode($email));
 				}
 				else
 				{

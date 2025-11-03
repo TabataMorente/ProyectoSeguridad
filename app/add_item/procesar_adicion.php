@@ -45,6 +45,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 $email = $_POST['user'] ?? null;
+
+
 $sql_usuario = "SELECT id FROM usuarios WHERE email = '$email'";
 $result_usuario = $conn->query($sql_usuario);
 if (!$result_usuario || $result_usuario->num_rows === 0) {
@@ -54,48 +56,56 @@ if (!$result_usuario || $result_usuario->num_rows === 0) {
 $idUs = $result_usuario->fetch_assoc()['id'];
 
 $cerdo     = isset($_POST['cerdo'])     ? $conn->real_escape_string($_POST['cerdo'])     : '';
-$idCarrera = isset($_POST['carrera']) ? $conn->real_escape_string($_POST['carrera']) : '';
+$carrera = isset($_POST['carrera']) ? $conn->real_escape_string($_POST['carrera']) : '';
 $cantidad  = isset($_POST['cantidad'])  ? $conn->real_escape_string($_POST['cantidad'])  : '';
 
-if (empty($cerdo) || empty($idCarrera) || empty($cantidad)) {
-    echo "❌ Faltan datos del formulario.";
-    echo "<div class='volver-container'>";
-    echo "<a href=" . "add_item.php?user=" . urlencode($email) . ">Volver</a>";
-    echo "</div>";
+if (empty($cerdo) || !preg_match('/^[a-zA-Z0-9\s]{1,50}$/', $cerdo)) {
+    echo "❌ El nombre del cerdo no es válido (solo letras, números y espacios, máx 50 caracteres).";
     exit;
 }
 
-// Validar que el cerdo participa en la carrera
-$sql_validacion = "
-    SELECT 1 
-    FROM participante 
-    WHERE cerdo = '$cerdo' AND idCarrera = '$idCarrera'
-";
-$result_validacion = $conn->query($sql_validacion);
+if (empty($carrera) || !preg_match('/^[a-zA-Z0-9\s]{1,50}$/', $carrera)) {
+    echo "❌ El nombre de la carrera no es válido (solo letras, números y espacios, máx 50 caracteres).";
+    exit;
+}
 
-if (!$result_validacion || $result_validacion->num_rows === 0) {
+if (empty($cantidad) || !ctype_digit($cantidad) || (int)$cantidad <= 0) {
+    echo "❌ La cantidad debe ser un número entero positivo.";
+    exit;
+}
+
+// ---- Validar que el cerdo participa en la carrera ----
+$stmt_validacion = $conn->prepare("SELECT 1 FROM participante WHERE cerdo = ? AND idCarrera = ?");
+$stmt_validacion->bind_param("ss", $cerdo, $carrera);
+$stmt_validacion->execute();
+$result_validacion = $stmt_validacion->get_result();
+
+if ($result_validacion->num_rows === 0) {
     echo "❌ Error: El cerdo no participa en la carrera seleccionada.";
     echo "<div class='volver-container'>";
     echo "<a href=" . "add_item.php?user=" . urlencode($email) . ">Volver</a>";
     echo "</div>";
+    $stmt_validacion->close();
+    $conn->close();
     exit;
 }
+$stmt_validacion->close();
 
-$sql_apuesta = "
-    INSERT INTO apuesta (cerdo, idCarrera, idUs, cantidad)
-    VALUES ('$cerdo', '$idCarrera', '$idUs', '$cantidad')
-";
+$stmt_apuesta = $conn->prepare("INSERT INTO apuesta (cerdo, idCarrera, idUs, cantidad) VALUES (?, ?, ?, ?)");
+$stmt_apuesta->bind_param("ssii", $cerdo, $carrera, $idUs, $cantidad);
 
-if ($conn->query($sql_apuesta) === TRUE) {
+if ($stmt_apuesta->execute()) {
     echo "✅ Apuesta registrada correctamente.";
     echo "<div class='volver-container'>";
     echo "<a href=" . "add_item.php?user=" . urlencode($email) . ">Volver</a>";
     echo "</div>";
 } else {
-    echo "❌ Error al registrar la apuesta: " . $conn->error;
+    echo "❌ Error al registrar la apuesta: " . $stmt_apuesta->error;
     echo "<div class='volver-container'>";
     echo "<a href=" . "add_item.php?user=" . urlencode($email) . ">Volver</a>";
-    echo "</div>";}
+    echo "</div>";
+}
 
+$stmt_apuesta->close();
 $conn->close();
 ?>
