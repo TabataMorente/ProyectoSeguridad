@@ -107,48 +107,29 @@
     <h1>Modificar mis datos</h1>
       <?php
 
-                echo "<form id='user_modify_form' action='modify_datos.php?user=$email' method='POST'>";
-                echo "<label for='nombre'>Nombre y Apellidos:</label>";
-                if ($nombre)
-                {
-                        $resultado = "<input type='text' id='nombre' name='nombre' required value='$nombre' />";
-                        echo $resultado;
-                }
+          echo "<form id='user_modify_form' action='modify_datos.php' method='POST'>";
 
-                echo "<label for='dni'>DNI:</label>";
-                if ($dni)
-                {
-                        $resultado = "<input type='text' id='dni' name='dni' required value='$dni' />";
-                        echo $resultado;
-                }
+          echo "<label for='nombre'>Nombre y Apellidos:</label>";
+          echo "<input type='text' id='nombre' name='nombre' required value='" . htmlspecialchars($nombre) . "' />";
 
-                echo "<label for='telefono'>Teléfono:</label>";
-                if ($telefono)
-                {
-                        $resultado = "<input type='text' id='telefono' name='telefono' required value='$telefono' />";
-                        echo $resultado;
-                }
+          echo "<label for='dni'>DNI:</label>";
+          echo "<input type='text' id='dni' name='dni' required value='" . htmlspecialchars($dni) . "' />";
 
-                echo "<label for='fecha'>Fecha de Nacimiento:</label>";
-                if ($fecha)
-                {
-                        $resultado = "<input type='date' id='fecha' name='fecha' required value='$fecha' />";
-                        echo $resultado;
-                }
+          echo "<label for='telefono'>Teléfono:</label>";
+          echo "<input type='text' id='telefono' name='telefono' required value='" . htmlspecialchars($telefono) . "' />";
 
-                echo "<label for='email'>Email:</label>";
-                if ($email)
-                {
-                        $resultado = "<input type='email' id='email' name='email' required value='$email' />";
-                        echo $resultado;
-                }
+          echo "<label for='fecha'>Fecha de Nacimiento:</label>";
+          echo "<input type='date' id='fecha' name='fecha' required value='" . htmlspecialchars($fecha) . "' />";
 
-                echo "<label for='contrasena'>Contraseña:</label>";
-                if ($contrasena)
-                {
-                        $resultado = "<input type='contrasena' id='contrasena' name='contrasena' required value='$contrasena' />";
-                        echo $resultado;
-                }
+          echo "<input type='hidden' name='email' value='" . htmlspecialchars($email) . "' />";
+          echo "<label for='email_visible'>Email:</label>";
+          echo "<input type='email' id='email_visible' name='email_visible' required value='" . htmlspecialchars($email) . "' />";
+
+          echo "<label for='contrasena_actual'>Contraseña actual:</label>";
+          echo "<input type='password' id='contrasena_actual' name='contrasena_actual' placeholder='Introduce tu contraseña actual' required />";
+
+          echo "<label for='contrasena_nueva'>Nueva contraseña (opcional):</label>";
+          echo "<input type='password' id='contrasena_nueva' name='contrasena_nueva' placeholder='Dejar vacío si no quieres cambiarla' />";
       ?>
       <button id="user_modify_submit" type="submit">Guardar cambios</button>
     </form>

@@ -1,45 +1,41 @@
 <?php
-	include '../conexion_bd/conexion_bd.php';
-        
-	$nombre = "null";
-        $email = "null";
-        $dni = "null";
-        $telefono = "null";
-        $fecha = "null";
-        $contrasena = "null";
-        if ( $_SERVER['REQUEST_METHOD'] === "GET")
-        {
-                if ( isset($_GET["user"]) )
-                {
-                        // Esto es para acceder al nombre
-                        $hostname = $conexion_bd[0];
-                        $username = $conexion_bd[1];
-                        $password = $conexion_bd[2];
-                        $db = $conexion_bd[3];
+// modify_user.php
+include '../conexion_bd/conexion_bd.php';
 
-                        $conn = mysqli_connect($hostname,$username,$password,$db);
+$nombre = $email = $dni = $telefono = $fecha = "";
 
-                        if ($conn->connect_error) {
-                                die("Database connection failed: " . $conn->connect_error);
-                        }
+if ($_SERVER['REQUEST_METHOD'] === "GET" && isset($_GET["user"])) {
+    list($hostname, $username, $password, $db) = $conexion_bd;
+    $conn = new mysqli($hostname, $username, $password, $db);
+    if ($conn->connect_error) {
+        die("Error de conexión: " . $conn->connect_error);
+    }
 
-                        $comando = "SELECT `nombre`,`dni`,`telefono`,`fecha`, `contrasena` FROM `usuarios` WHERE `email`='" . $_GET["user"] . "';";
+    $emailParam = $_GET["user"];
 
-                        $query = mysqli_query($conn, $comando) or die (mysqli_error($conn));
+    $stmt = $conn->prepare("SELECT id, nombre, dni, telefono, fecha FROM usuarios WHERE email = ?");
+    $stmt->bind_param("s", $emailParam);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-                        if ($row = mysqli_fetch_array($query))
-                        {
-                                $nombre = $row["nombre"];
-                                $email = $_GET["user"];
-                                $dni = $row["dni"];
-                                $telefono = $row["telefono"];
-                                $fecha = $row["fecha"];
-                                $contrasena = $row["contrasena"];
-                        }
+    if ($row = $result->fetch_assoc()) {
+        $usuario_id = $row['id'];
+        $nombre = $row["nombre"];
+        $email = $emailParam;
+        $dni = $row["dni"];
+        $telefono = $row["telefono"];
+        $fecha = $row["fecha"];
+    } else {
+        header("Location: ../login/index.html?error=4");
+        exit;
+    }
 
-                        $conn->close();
-                }
-        }
+    $stmt->close();
+    $conn->close();
 
-        include "index.html";
-?>
+    // Incluye el HTML que usa las variables $nombre, $email, ... (ver el fragmento de formulario abajo)
+    include "index.html";
+} else {
+    header("Location: ../login/index.html?error=3");
+    exit;
+}

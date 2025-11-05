@@ -47,6 +47,14 @@ document.addEventListener("DOMContentLoaded", () => {
         valido = false;
     }
 
+    if (contrasena.length < 8) {
+      alert("La contraseña debe tener al menos 8 caracteres.");
+      e.preventDefault();
+      return;
+    }
+
+    // Si todas las validaciones pasan, el formulario se enviará
+
   });
 });
 

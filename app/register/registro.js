@@ -61,6 +61,18 @@ document.addEventListener("DOMContentLoaded", () => {
             valido = false;
         }
 
+        // --- Validar Contraseñas ---
+        const contrasena = document.getElementById("contrasena").value;
+        const confirmarContrasena = document.getElementById("confirmar_contrasena").value;
+        if (contrasena.length < 8) {
+            mostrarError("contrasena", "La contraseña debe tener al menos 8 caracteres.");
+            valido = false;
+        }
+        if (contrasena !== confirmarContrasena) {
+            mostrarError("confirmar_contrasena", "Las contraseñas no coinciden.");
+            valido = false;
+        }
+
         // --- Si todo es válido ---
         if (valido) {
             form.submit(); // Enviar formulario al servidor si todo es correcto

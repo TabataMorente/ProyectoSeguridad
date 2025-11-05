@@ -1,63 +1,50 @@
 <?php
-	include '../conexion_bd/conexion_bd.php';
-	$problema = true;
+include "../conexion_bd/conexion_bd.php"; // ajusta la ruta a tu conexión
 
-	if ($_SERVER['REQUEST_METHOD'] === 'GET')
-	{
-		if ( isset($_GET["email"]) and isset($_GET["contrasena"])  )
-		{
-			// The request is using the POST method
+if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+    echo "Método no permitido.";
+    exit;
+}
 
-			$hostname = $conexion_bd[0];
-			$username = $conexion_bd[1];
-			$password = $conexion_bd[2];
-			$db = $conexion_bd[3];
+$email = isset($_POST["email"]) ? trim($_POST["email"]) : '';
+$contrasena = isset($_POST["contrasena"]) ? $_POST["contrasena"] : '';
 
-			$conn = mysqli_connect($hostname,$username,$password,$db);
-		
-			if ($conn->connect_error) {
-				die("Database connection failed: " . $conn->connect_error);
-			}
-		
-			$email = trim($_GET["email"]);
-        	$contrasena = $_GET["contrasena"];
+if (empty($email) || empty($contrasena)) {
+    header("Location: index.html?error=1"); // campos vacíos
+    exit;
+}
 
-			//if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            //echo "❌ Formato de correo inválido.";
-            //exit;
-        	//}
-	
-			$stmt_validacion = $conn->prepare("SELECT `email`, `contrasena` FROM `usuarios` WHERE `email` = ?");
-			$stmt_validacion->bind_param("s", $email);
-			$stmt_validacion->execute();
+// Conexión
+list($hostname, $username, $password, $db) = $conexion_bd;
+$conn = new mysqli($hostname, $username, $password, $db);
 
-			$query = $stmt_validacion->get_result();
-			
-			if ($row = mysqli_fetch_array($query))
-			{
-				if ( $row["contrasena"] == $contrasena )
-				{
-					header("Location:/pagUsuario/pagUsuario.php?user=" . urlencode($email));
-				}
-				else
-				{
-					header("Location:/login/index.html?error=2");
-				}
-			}
-			else	
-			{
-				header("Location:/login/index.html?error=1");
-			}
-	
-			$problema = false;
-			$conn->close();
-			exit;	
-		}
+if ($conn->connect_error) {
+    error_log("Error de conexión: " . $conn->connect_error);
+    echo "❌ Error interno. Inténtalo más tarde.";
+    exit;
+}
 
-		if ( $problema )
-		{
-			echo "Hubo un problema al consultar la base de datos";
-		}
-	}
+// Buscar usuario por email
+$stmt = $conn->prepare("SELECT email, contrasena FROM usuarios WHERE email = ? LIMIT 1");
+$stmt->bind_param("s", $email);
+$stmt->execute();
+$result = $stmt->get_result();
 
+if ($row = $result->fetch_assoc()) {
+    // Verificar la contraseña con hash
+    if (password_verify($contrasena, $row["contrasena"])) {
+        // Redirigir al usuario con su email en la URL
+        header("Location: /pagUsuario/pagUsuario.php?user=" . urlencode($row["email"]));
+        exit;
+    } else {
+        header("Location: index.html?error=2"); // contraseña incorrecta
+        exit;
+    }
+} else {
+    header("Location: index.html?error=1"); // usuario no encontrado
+    exit;
+}
+
+$stmt->close();
+$conn->close();
 ?>

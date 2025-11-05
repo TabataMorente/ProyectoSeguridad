@@ -1,87 +1,127 @@
 <?php
+// modify_datos.php
 include '../conexion_bd/conexion_bd.php';
 
-$host = $conexion_bd[0];
-$usuario = $conexion_bd[1];
-$clave = $conexion_bd[2];
-$bd = $conexion_bd[3];
+list($host, $usuario_db, $clave_db, $bd) = $conexion_bd;
 
-echo " 
-    <style>
-    .volver-container {
-      position: absolute;
-      top: 10px;
-      right: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      font-family: Arial, sans-serif;
-      font-size: 16px;
-      color: #333;
-      gap: 5px;
-    }
-
-    .volver-container a {
-      background: #4CAF50;
-      color: white;
-      padding: 8px 16px;
-      border-radius: 5px;
-      text-decoration: none;
-      font-weight: bold;
-      transition: background 0.3s ease;
-    }
-
-    .volver-container a:hover {
-      background: #45a049;
-    }
-    </style>";
-$conn = new mysqli($host, $usuario, $clave, $bd);
-
+$conn = new mysqli($host, $usuario_db, $clave_db, $bd);
 if ($conn->connect_error) {
     die("Error de conexión: " . $conn->connect_error);
 }
 
-if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo "Método no permitido.";
     exit;
 }
 
-// --- Tomar los datos tal cual vienen del formulario (SIN VALIDAR) ---
-$nombre   = isset($_POST['nombre'])   ? $_POST['nombre']   : '';
-$dni      = isset($_POST['dni'])      ? $_POST['dni']      : '';
-$telefono = isset($_POST['telefono']) ? $_POST['telefono'] : '';
-$fecha    = isset($_POST['fecha'])    ? $_POST['fecha']    : '';
-$email    = isset($_POST['email'])    ? $_POST['email']    : '';
-$contrasena = isset($_POST['contrasena'])    ? $_POST['contrasena']    : '';
-$emailAnt = isset($_GET['user'])    ? $_GET['user']    : '';
+// Recoger y sanear
+$nombre        = trim($_POST['nombre'] ?? '');
+$dni           = trim($_POST['dni'] ?? '');
+$telefono      = trim($_POST['telefono'] ?? '');
+$fecha         = trim($_POST['fecha'] ?? '');
+$email_original= trim($_POST['email'] ?? '');         // hidden original email (identificador)
+$email_nuevo   = trim($_POST['email_visible'] ?? ''); // email editable por el usuario
+$con_actual    = $_POST['contrasena_actual'] ?? '';
+$con_nueva     = $_POST['contrasena_nueva'] ?? '';
 
+$errors = [];
 
-// --- LAS VALIDACIONES SE HACEN EN EL ARCHIVO validar_modificar.js ---
+// Validaciones básicas
+if ($nombre === '') $errors[] = "El nombre es obligatorio.";
+if ($email_nuevo === '' || !filter_var($email_nuevo, FILTER_VALIDATE_EMAIL)) $errors[] = "Email no válido.";
+if ($fecha !== '') {
+    $d = DateTime::createFromFormat('Y-m-d', $fecha);
+    if (!($d && $d->format('Y-m-d') === $fecha)) $errors[] = "Formato de fecha inválido (esperado YYYY-MM-DD).";
+}
+if ($telefono !== '' && !preg_match('/^\+?\d{7,15}$/', $telefono)) $errors[] = "Teléfono inválido.";
+if ($dni !== '' && !preg_match('/^[A-Za-z0-9\-]{4,20}$/', $dni)) $errors[] = "DNI inválido.";
 
+// obtenemos hash actual del usuario (para verificar contraseña y obtener su id)
+$stmt = $conn->prepare("SELECT id, contrasena FROM usuarios WHERE email = ? LIMIT 1");
+if (!$stmt) {
+    error_log("Prepare error (select user): " . $conn->error);
+    echo "Error interno.";
+    exit;
+}
+$stmt->bind_param("s", $email_original);
+$stmt->execute();
+$res = $stmt->get_result();
 
-$sql = $conn->prepare("UPDATE usuarios
-        SET nombre = ?,
-        contrasena = ?,
-        dni = ?,
-        telefono = ?,
-        fecha = ?,
-        email = ?
-        WHERE email = ?;");
+if (!($row = $res->fetch_assoc())) {
+    $stmt->close();
+    $conn->close();
+    echo "Usuario no encontrado.";
+    exit;
+}
+$user_id = $row['id'];
+$hash_guardado_en_bd = $row['contrasena'];
+$stmt->close();
 
-$sql->bind_param("sssisss", $nombre, $contrasena, $dni, $telefono, $fecha, $email, $emailAnt );
+// Verificar contraseña actual
+if (!password_verify($con_actual, $hash_guardado_en_bd)) {
+    $errors[] = "La contraseña actual es incorrecta.";
+}
 
+// Si se ha pedido nueva contraseña, validar longitud
+$change_password = false;
+if (strlen($con_nueva) > 0) {
+    if (strlen($con_nueva) < 8) {
+        $errors[] = "La nueva contraseña debe tener al menos 8 caracteres.";
+    } else {
+        $change_password = true;
+        $new_hash = password_hash($con_nueva, PASSWORD_DEFAULT);
+        if ($new_hash === false) {
+            $errors[] = "Error al generar el hash de la nueva contraseña.";
+        }
+    }
+}
 
-if ($sql->execute()) {
-    echo "✅ Modificacion completada correctamente (inseguro).";
-    echo "<div class='volver-container'>";
-    echo "<a href=" . "modify_user.php?user=" . urlencode($email) . ">Volver</a>";
-    echo "</div>";
+if (!empty($errors)) {
+    foreach ($errors as $err) echo htmlspecialchars("• $err") . "<br>";
+    echo "<div class='volver-container'><a href='modify_user.php?user=" . urlencode($email_original) . "'>Volver</a></div>";
+    $conn->close();
+    exit;
+}
+
+// Comprobar duplicados de email o DNI pero excluyendo al propio usuario
+$stmt = $conn->prepare("SELECT id FROM usuarios WHERE (email = ? OR dni = ?) AND id <> ? LIMIT 1");
+if (!$stmt) {
+    error_log("Prepare error (check duplicates): " . $conn->error);
+    echo "Error interno.";
+    exit;
+}
+$stmt->bind_param("ssi", $email_nuevo, $dni, $user_id);
+$stmt->execute();
+$stmt->store_result();
+if ($stmt->num_rows > 0) {
+    echo "El email o DNI ya está registrado por otro usuario.";
+    echo "<div class='volver-container'><a href='modify_user.php?user=" . urlencode($email_original) . "'>Volver</a></div>";
+    $stmt->close();
+    $conn->close();
+    exit;
+}
+$stmt->close();
+
+// Preparar UPDATE dinámico según si cambia la contraseña o no
+if ($change_password) {
+    $stmt = $conn->prepare("UPDATE usuarios SET nombre = ?, dni = ?, telefono = ?, fecha = ?, email = ?, contrasena = ? WHERE id = ?");
+    if (!$stmt) { error_log("Prepare error (update w/pass): ".$conn->error); echo "Error interno."; exit; }
+    $stmt->bind_param("ssssssi", $nombre, $dni, $telefono, $fecha, $email_nuevo, $new_hash, $user_id);
 } else {
-    // En un entorno real no deberías mostrar $conn->error a usuarios finales
-    echo "❌ Error al insertar: " . $conn->error;
-    echo "<div class='volver-container'>";
-    echo "<a href=" . "modify_user.php?user=" . urlencode($emailAnt) . ">Volver</a>";
-    echo "</div>";}
+    $stmt = $conn->prepare("UPDATE usuarios SET nombre = ?, dni = ?, telefono = ?, fecha = ?, email = ? WHERE id = ?");
+    if (!$stmt) { error_log("Prepare error (update): ".$conn->error); echo "Error interno."; exit; }
+    $stmt->bind_param("sssssi", $nombre, $dni, $telefono, $fecha, $email_nuevo, $user_id);
+}
 
+if ($stmt->execute()) {
+    echo "✅ Datos modificados correctamente.";
+    echo "<div class='volver-container'><a href='modify_user.php?user=" . urlencode($email_nuevo) . "'>Volver al perfil</a></div>";
+} else {
+    error_log("Execute error (update): " . $stmt->error);
+    echo "❌ Error al modificar los datos. Inténtalo más tarde.";
+    echo "<div class='volver-container'><a href='modify_user.php?user=" . urlencode($email_original) . "'>Volver</a></div>";
+}
+
+$stmt->close();
 $conn->close();
 ?>
