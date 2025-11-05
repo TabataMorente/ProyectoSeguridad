@@ -19,12 +19,19 @@
 				die("Database connection failed: " . $conn->connect_error);
 			}
 		
-			$email = $_GET["email"];
-			$contrasena = $_GET["contrasena"];
-	
-			$comando = "SELECT `email`, `contrasena` FROM `usuarios` WHERE `email`='" . $email . "';";
+			$email = trim($_GET["email"]);
+        	$contrasena = $_GET["contrasena"];
 
-			$query = mysqli_query($conn, $comando) or die (mysqli_error($conn));
+			//if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            //echo "❌ Formato de correo inválido.";
+            //exit;
+        	//}
+	
+			$stmt_validacion = $conn->prepare("SELECT `email`, `contrasena` FROM `usuarios` WHERE `email` = ?");
+			$stmt_validacion->bind_param("s", $email);
+			$stmt_validacion->execute();
+
+			$query = $stmt_validacion->get_result();
 			
 			if ($row = mysqli_fetch_array($query))
 			{
@@ -43,7 +50,7 @@
 			}
 	
 			$problema = false;
-			$conn->close(); // Es recomendable cerrar la base de datos despues de usarla
+			$conn->close();
 			exit;	
 		}
 

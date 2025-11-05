@@ -55,19 +55,23 @@ $email    = isset($_POST['email'])    ? $_POST['email']    : '';
 $contrasena = isset($_POST['contrasena'])    ? $_POST['contrasena']    : '';
 $emailAnt = isset($_GET['user'])    ? $_GET['user']    : '';
 
-// --- Construir la consulta directamente (muy INSEGURO) ---
-$sql = "UPDATE usuarios
-        SET nombre = '$nombre',
-        contrasena = '$contrasena',
-        dni = '$dni',
-        telefono = '$telefono',
-        fecha = '$fecha',
-        email = '$email'
-        WHERE email ='$emailAnt';";
-// echo $sql;
+
+// --- LAS VALIDACIONES SE HACEN EN EL ARCHIVO validar_modificar.js ---
 
 
-if ($conn->query($sql) === TRUE) {
+$sql = $conn->prepare("UPDATE usuarios
+        SET nombre = ?,
+        contrasena = ?,
+        dni = ?,
+        telefono = ?,
+        fecha = ?,
+        email = ?
+        WHERE email = ?;");
+
+$sql->bind_param("sssisss", $nombre, $contrasena, $dni, $telefono, $fecha, $email, $emailAnt );
+
+
+if ($sql->execute()) {
     echo "✅ Modificacion completada correctamente (inseguro).";
     echo "<div class='volver-container'>";
     echo "<a href=" . "modify_user.php?user=" . urlencode($email) . ">Volver</a>";
