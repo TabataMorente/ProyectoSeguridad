@@ -15,6 +15,9 @@ services:
       - ./app:/var/www/html/
       - ./config/security.ini:/usr/local/etc/php/conf.d/security.ini
       - ./config/security.conf:/etc/apache2/conf-enabled/security.conf
+      - ./start-web.sh:/start-web.sh   # Montar el script
+    command: ["/start-web.sh"]  # Ejecutar el script al arrancar
+    
   db:
     image: mariadb:10.8.2
     restart: always
