@@ -3,13 +3,18 @@ services:
     image: web
     environment:
       - ALLOW_OVERRIDE=true
+      - HOSTNAME=db
+      - USER=admin
+      - PASSWORD=test
+      - DB=database
     ports:
       - "81:80"
     links:
       - db
     volumes:
       - ./app:/var/www/html/
-
+      - ./config/security.ini:/usr/local/etc/php/conf.d/security.ini
+      - ./config/security.conf:/etc/apache2/conf-enabled/security.conf
   db:
     image: mariadb:10.8.2
     restart: always
