@@ -1,11 +1,14 @@
 <?php
 header("Content-Security-Policy: default-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self' 'unsafe-inline'; frame-ancestors 'none'; base-uri 'self';");
 // modify_datos.php
-include '../conexion_bd/conexion_bd.php';
 
-list($host, $usuario_db, $clave_db, $bd) = $conexion_bd;
+$hostname = getenv("HOSTNAME");
+$username = getenv("USER");
+$password = getenv("PASSWORD");
+$db = getenv("DB");
 
-$conn = new mysqli($host, $usuario_db, $clave_db, $bd);
+$conn = new mysqli($hostname, $username, $password, $db);
+
 if ($conn->connect_error) {
     die("Error de conexión: " . $conn->connect_error);
 }

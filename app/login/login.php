@@ -1,6 +1,4 @@
 <?php
-include "../conexion_bd/conexion_bd.php"; // ajusta la ruta a tu conexión
-
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     echo "Método no permitido.";
     exit;
@@ -15,7 +13,10 @@ if (empty($email) || empty($contrasena)) {
 }
 
 // Conexión
-list($hostname, $username, $password, $db) = $conexion_bd;
+$hostname = getenv("HOSTNAME");
+$username = getenv("USER");
+$password = getenv("PASSWORD");
+$db = getenv("DB");
 $conn = new mysqli($hostname, $username, $password, $db);
 
 if ($conn->connect_error) {

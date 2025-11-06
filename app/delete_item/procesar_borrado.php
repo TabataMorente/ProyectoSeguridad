@@ -1,11 +1,11 @@
 <?php
 
-include '../conexion_bd/conexion_bd.php';
 header("Content-Security-Policy: default-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self' 'unsafe-inline'; frame-ancestors 'none'; base-uri 'self';");
-$host = $conexion_bd[0];
-$usuario = $conexion_bd[1];
-$clave = $conexion_bd[2];
-$bd = $conexion_bd[3];
+$hostname = getenv("HOSTNAME");
+$username = getenv("USER");
+$password = getenv("PASSWORD");
+$db = getenv("DB");
+
 echo " 
     <style>
     .volver-container {
@@ -40,7 +40,8 @@ echo "
 
 $idApuesta = $_POST['id'] ?? null;
 
-$conn = new mysqli($host, $usuario, $clave, $bd);
+$conn = new mysqli($hostname, $username, $password, $db);
+
 if ($conn->connect_error) {
     die("❌ Error de conexión: " . $conn->connect_error);
     echo "<a href=" . "delete_item.php?user=" . urlencode($email) . ">Volver</a>";
