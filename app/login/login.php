@@ -5,6 +5,7 @@ ini_set('session.gc_maxlifetime',60*30); //Tiempo que el servidor mantiene la se
 
 session_start(); //inicia la sesion para poder guardar los datos del usuario
 
+
 include "../conexion_bd/conexion_bd.php"; // ajusta la ruta a tu conexión
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
@@ -21,7 +22,10 @@ if (empty($email) || empty($contrasena)) {
 }
 
 // Conexión
-list($hostname, $username, $password, $db) = $conexion_bd;
+$hostname = getenv("HOSTNAME");
+$username = getenv("USER");
+$password = getenv("PASSWORD");
+$db = getenv("DB");
 $conn = new mysqli($hostname, $username, $password, $db);
 
 if ($conn->connect_error) {

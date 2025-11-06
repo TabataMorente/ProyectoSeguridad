@@ -1,12 +1,14 @@
 <?php
-// modify_user.php
-include '../conexion_bd/conexion_bd.php';
-
 $nombre = $email = $dni = $telefono = $fecha = "";
 
 if ($_SERVER['REQUEST_METHOD'] === "GET" && isset($_GET["user"])) {
-    list($hostname, $username, $password, $db) = $conexion_bd;
-    $conn = new mysqli($hostname, $username, $password, $db);
+    
+   $hostname = getenv("HOSTNAME");
+   $username = getenv("USER");
+   $password = getenv("PASSWORD");
+   $db = getenv("DB");
+   $conn = new mysqli($hostname, $username, $password, $db);
+   
     if ($conn->connect_error) {
         die("Error de conexión: " . $conn->connect_error);
     }

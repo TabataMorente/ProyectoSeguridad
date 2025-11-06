@@ -12,7 +12,6 @@ if (isset($_SESSION['ultimo_acceso'])) {
 }
 $_SESSION['ultimo_acceso'] = time();
 
-
 include '../conexion_bd/conexion_bd.php';
 	$nombre = "null";
         $email = "null";
@@ -23,19 +22,23 @@ include '../conexion_bd/conexion_bd.php';
                 header("Location: /index.html?error=acceso_no_autorizado");
                 exit;
         }
-
         //Verificar que hay parametro GET y que coincida con la sesion
         if (!isset($_GET['user']) || $_GET['user'] !== $_SESSION['email']) {
                 echo "No tienes permiso para acceder a esta página.";
                 exit;
         }
+                // Esto es para acceder al nombre
+        	$hostname = getenv("HOSTNAME");
+		$username = getenv("USER");
+		$password = getenv("PASSWORD");
+		$db = getenv("DB");
 
-        //Si es correcto, obtener los datos de la BD
-        list($hostname,$username,$password,$db)=$conexion_bd;
-        $conn= new mysqli($hostname,$username,$password,$db);
-        if ($conn->connect_error) {
-                die("Database connection failed: " . $conn->connect_error);
-        }
+		$conn = new mysqli($hostname, $username, $password, $db);
+                if ($conn->connect_error)
+                {
+                        die("Database connection failed: " . $conn->connect_error);
+                }
+               
 
         //Evitar inyeccion SQL
         $stmt = $conn->prepare("SELECT nombre FROM usuarios WHERE email = ? LIMIT 1");

@@ -1,12 +1,11 @@
 <?php
 header("Content-Security-Policy: default-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self' 'unsafe-inline'; frame-ancestors 'none'; base-uri 'self';");
-$host = "proyectoseguridad-db-1";
-$usuario = "admin";
-$clave = "test";
-$bd = "database";
+$hostname = getenv("HOSTNAME");
+$username = getenv("USER");
+$password = getenv("PASSWORD");
+$db = getenv("DB");
+$conn = new mysqli($hostname, $username, $password, $db);
 $email = isset($_GET['user']) ? $_GET['user'] : '';
-
-$conn = new mysqli($host, $usuario, $clave, $bd);
 
 if ($conn->connect_error) {
     die("Error de conexión: " . $conn->connect_error);
