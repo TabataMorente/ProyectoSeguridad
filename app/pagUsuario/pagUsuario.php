@@ -3,18 +3,9 @@ include('../auth.php');
 
 	$nombre = "null";
         $email = "null";
-
-        //Verificar si hay sesion activa
-        if(!isset($_SESSION['email']))
-        {
-                header("Location: /index.html?error=acceso_no_autorizado");
-                exit;
-        }
-        //Verificar que hay parametro GET y que coincida con la sesion
-        if (!isset($_GET['user']) || $_GET['user'] !== $_SESSION['email']) {
-                echo "No tienes permiso para acceder a esta página.";
-                exit;
-        }
+        
+        
+        
                 // Esto es para acceder al nombre
         	$hostname = getenv("HOSTNAME");
 		$username = getenv("USER");

@@ -1,4 +1,5 @@
 <?php
+include('../auth.php');
 header("Content-Security-Policy: default-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self' 'unsafe-inline'; frame-ancestors 'none'; base-uri 'self';");
 // modify_datos.php
 
@@ -23,7 +24,7 @@ $nombre        = trim($_POST['nombre'] ?? '');
 $dni           = trim($_POST['dni'] ?? '');
 $telefono      = trim($_POST['telefono'] ?? '');
 $fecha         = trim($_POST['fecha'] ?? '');
-$email_original= trim($_POST['email'] ?? '');         // hidden original email (identificador)
+$email_original= trim($_POST['email'] ?? '');    //con session solo el usuario original puede modificar sus datos     // hidden original email (identificador)
 $email_nuevo   = trim($_POST['email_visible'] ?? ''); // email editable por el usuario
 $con_actual    = $_POST['contrasena_actual'] ?? '';
 $con_nueva     = $_POST['contrasena_nueva'] ?? '';

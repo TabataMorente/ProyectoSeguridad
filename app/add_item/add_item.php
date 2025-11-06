@@ -1,4 +1,6 @@
 <?php
+include('../auth.php');
+
         $nombre = "null";
         $email = "null";
 

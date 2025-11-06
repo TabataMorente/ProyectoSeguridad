@@ -8,6 +8,13 @@ session_start(); //inicia sesion para poder guardar los datos
                 exit;
         }
 
+        //Verificar que hay parametro GET y que coincida con la sesion
+        if (!isset($_GET['user']) || $_GET['user'] !== $_SESSION['email']) {
+                echo "No tienes permiso para acceder a esta página.";
+                exit;
+        }
+
+
 $inactividad_max = 60*30;
 if (isset($_SESSION['ultimo_acceso'])) {
     if (time() - $_SESSION['ultimo_acceso'] > $inactividad_max) {
