@@ -1,4 +1,5 @@
 <?php
+header("Content-Security-Policy: default-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self' 'unsafe-inline'; frame-ancestors 'none'; base-uri 'self';");
 $host = "proyectoseguridad-db-1";
 $usuario = "admin";
 $clave = "test";

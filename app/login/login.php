@@ -10,7 +10,7 @@ $email = isset($_POST["email"]) ? trim($_POST["email"]) : '';
 $contrasena = isset($_POST["contrasena"]) ? $_POST["contrasena"] : '';
 
 if (empty($email) || empty($contrasena)) {
-    header("Location: index.html?error=1"); // campos vacíos
+    header("Location: index.html?error=3"); // campos vacíos
     exit;
 }
 

@@ -1,4 +1,5 @@
 <?php
+header("Content-Security-Policy: default-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self' 'unsafe-inline'; frame-ancestors 'none'; base-uri 'self';");
 echo "
     <style>
     .volver-container {
@@ -84,7 +85,7 @@ if (!empty($errors)) {
     foreach ($errors as $err) {
         echo htmlspecialchars("• $err") . "<br>";
     }
-    echo "<div class='volver-container'><a href='index.html'>Volver</a></div>";
+    echo "<div class='volver-container'><a href='register.php'>Volver</a></div>";
     exit;
 }
 
@@ -102,7 +103,7 @@ try {
 
     if ($stmt->num_rows > 0) {
         echo "El email o DNI ya está registrado.";
-        echo "<div class='volver-container'><a href='index.html'>Volver</a></div>";
+        echo "<div class='volver-container'><a href='register.php'>Volver</a></div>";
         $stmt->close();
         $conn->close();
         exit;
@@ -126,11 +127,11 @@ try {
 
     if ($stmt->execute()) {
         echo "✅ Registro completado correctamente.";
-        echo "<div class='volver-container'><a href='../login/index.html'>Iniciar sesión</a></div>";
+        echo "<div class='volver-container'><a href='../login/inicio.php'>Iniciar sesión</a></div>";
     } else {
         error_log("Execute error (insert): " . $stmt->error);
         echo "❌ Error al registrar el usuario. Inténtalo más tarde.";
-        echo "<div class='volver-container'><a href='index.html'>Volver</a></div>";
+        echo "<div class='volver-container'><a href='register.php'>Volver</a></div>";
     }
 
     $stmt->close();
@@ -139,7 +140,7 @@ try {
 } catch (Exception $e) {
     error_log("Exception en procesar_registro.php: " . $e->getMessage());
     echo "❌ waa.";
-    echo "<div class='volver-container'><a href='index.html'>Volver</a></div>";
+    echo "<div class='volver-container'><a href='register.php'>Volver</a></div>";
     if (isset($stmt) && $stmt instanceof mysqli_stmt) {
         $stmt->close();
     }

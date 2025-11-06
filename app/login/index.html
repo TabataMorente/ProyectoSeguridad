@@ -1,3 +1,6 @@
+<?php
+header("Content-Security-Policy: default-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self' 'unsafe-inline'; frame-ancestors 'none'; base-uri 'self';");
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -8,7 +11,7 @@
 </head>
 <body>
   <div class="volver-container">
-    <a href="../index.html">Volver al inicio</a>
+    <a href="../index.php">Volver al inicio</a>
   </div>
 
   <div class="container">
@@ -17,7 +20,7 @@
       <input type="text" id="nombre" name="email" placeholder="email"/>
       <input type="password" id="contrasena" name="contrasena" placeholder="password"/>
       <input type="submit" class="boton" value="Iniciar sesi&oacute;n" id="login_submit"/>
-      <p class="message">¿No registrado? <a href="/register/index.html" class="crear-cuenta">Crear cuenta</a></p>
+      <p class="message">¿No registrado? <a href="/register/register.php" class="crear-cuenta">Crear cuenta</a></p>
 
     </form>
   </div>
@@ -29,6 +32,9 @@
   }
   else if (params.get('error') === '2') {
     alert('Contraseña incorrecta');
+  }
+  else if (params.get('error') === '3') {
+    alert('Se deben rellenar los campos');
   }
   // Limpia la URL para que no se repita la alerta al refrescar
   const cleanUrl = window.location.origin + window.location.pathname;

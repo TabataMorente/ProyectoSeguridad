@@ -1,7 +1,7 @@
 <?php
 
 include '../conexion_bd/conexion_bd.php';
-
+header("Content-Security-Policy: default-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self' 'unsafe-inline'; frame-ancestors 'none'; base-uri 'self';");
 $host = $conexion_bd[0];
 $usuario = $conexion_bd[1];
 $clave = $conexion_bd[2];

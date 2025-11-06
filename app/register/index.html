@@ -1,3 +1,6 @@
+<?php
+header("Content-Security-Policy: default-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self' 'unsafe-inline'; frame-ancestors 'none'; base-uri 'self';");
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -119,7 +122,7 @@
 </head>
 <body>
   <div class="volver-container">
-    <a href="../index.html">Volver al inicio</a>
+    <a href="../index.php">Volver al inicio</a>
   </div>
 
   <div class="container">
@@ -151,7 +154,7 @@
     
     <div class="login-container">
       <div>¿Ya tienes cuenta?</div>
-      <a href="../login/index.html">Inicia sesión</a>
+      <a href="../login/inicio.php">Inicia sesión</a>
     </div>
   </div>
 </body>
