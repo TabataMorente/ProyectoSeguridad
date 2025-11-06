@@ -1,4 +1,10 @@
 <?php
+//Mantener sesion activa durante 30 minutos
+ini_set('session.cookie_lifetime',60*30); //Tiempo que dura la cookie de sesion en el navegador del usuario 
+ini_set('session.gc_maxlifetime',60*30); //Tiempo que el servidor mantiene la sesion almacenada antes de eliminarla
+
+session_start(); //inicia la sesion para poder guardar los datos del usuario
+
 include "../conexion_bd/conexion_bd.php"; // ajusta la ruta a tu conexión
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
@@ -33,6 +39,10 @@ $result = $stmt->get_result();
 if ($row = $result->fetch_assoc()) {
     // Verificar la contraseña con hash
     if (password_verify($contrasena, $row["contrasena"])) {
+        //Sesion segura
+        session_regenerate_id(true);
+        $_SESSION['email'] = $row['email']; //guardar quien ha iniciado sesion
+        
         // Redirigir al usuario con su email en la URL
         header("Location: /pagUsuario/pagUsuario.php?user=" . urlencode($row["email"]));
         exit;

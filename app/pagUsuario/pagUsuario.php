@@ -1,36 +1,59 @@
 <?php
-        include '../conexion_bd/conexion_bd.php';
+session_start(); //inicia sesion para poder guardar los datos
+$inactividad_max = 60*30;
+
+if (isset($_SESSION['ultimo_acceso'])) {
+    if (time() - $_SESSION['ultimo_acceso'] > $inactividad_max) {
+        session_unset();
+        session_destroy();
+        header("Location: /index.html?error=session_expirada");
+        exit;
+    }
+}
+$_SESSION['ultimo_acceso'] = time();
+
+
+include '../conexion_bd/conexion_bd.php';
 	$nombre = "null";
         $email = "null";
 
-        if ( $_SERVER['REQUEST_METHOD'] === "GET")
+        //Verificar si hay sesion activa
+        if(!isset($_SESSION['email']))
         {
-                if ( isset($_GET["user"]) )
-                {
-                        // Esto es para acceder al nombre
-                        $hostname = $conexion_bd[0];
-                        $username = $conexion_bd[1];
-                        $password = $conexion_bd[2];
-                        $db = $conexion_bd[3];
-
-                        $conn = mysqli_connect($hostname,$username,$password,$db);
-
-                        if ($conn->connect_error) {
-                                die("Database connection failed: " . $conn->connect_error);
-                        }
-
-                        $comando = "SELECT `nombre` FROM `usuarios` WHERE `email`='" . $_GET["user"] . "';";
-                        $query = mysqli_query($conn, $comando) or die (mysqli_error($conn));
-
-                        if ($row = mysqli_fetch_array($query))
-                        {
-                                $nombre = $row["nombre"];
-                                $email = $_GET["user"];
-                        }
-
-                        $conn->close();
-                }
+                header("Location: /index.html?error=acceso_no_autorizado");
+                exit;
         }
+
+        //Verificar que hay parametro GET y que coincida con la sesion
+        if (!isset($_GET['user']) || $_GET['user'] !== $_SESSION['email']) {
+                echo "No tienes permiso para acceder a esta página.";
+                exit;
+        }
+
+        //Si es correcto, obtener los datos de la BD
+        list($hostname,$username,$password,$db)=$conexion_bd;
+        $conn= new mysqli($hostname,$username,$password,$db);
+        if ($conn->connect_error) {
+                die("Database connection failed: " . $conn->connect_error);
+        }
+
+        //Evitar inyeccion SQL
+        $stmt = $conn->prepare("SELECT nombre FROM usuarios WHERE email = ? LIMIT 1");
+        $stmt->bind_param("s", $_SESSION['email']);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($row = $result -> fetch_assoc())
+        {
+                $nombre = $row["nombre"];
+                $email = $_SESSION["email"];
+        }
+
+        $stmt->close();
+        $conn->close();
+
+        
+        
 
         include "index.html";
 ?>
