@@ -12,7 +12,6 @@ if (isset($_SESSION['ultimo_acceso'])) {
 }
 $_SESSION['ultimo_acceso'] = time();
 
-include '../conexion_bd/conexion_bd.php';
 	$nombre = "null";
         $email = "null";
 
