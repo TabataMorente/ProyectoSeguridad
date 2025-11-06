@@ -113,12 +113,13 @@ header("Content-Security-Policy: default-src 'self'; img-src 'self' data:; scrip
 			<h1>Mis apuestas</h1>
 			<?php
 $email=$_GET["user"];
-$host = "proyectoseguridad-db-1";
-$usuario = "admin";
-$clave = "test";
-$bd = "database";
 
-$conn = new mysqli($host, $usuario, $clave, $bd);
+$hostname = getenv("HOSTNAME");
+$username = getenv("USER");
+$password = getenv("PASSWORD");
+$db = getenv("DB");
+
+$conn = new mysqli($hostname, $username, $password, $db);
 
 if ($conn->connect_error) {
     die("Error de conexión: " . $conn->connect_error);
