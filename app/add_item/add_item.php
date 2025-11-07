@@ -79,5 +79,5 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 }
         }
 
-        include "index.html";
+        include "index.php";
 ?>
