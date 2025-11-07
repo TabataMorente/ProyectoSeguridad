@@ -5,9 +5,11 @@ session_start(); //inicia sesion para poder guardar los datos
 if (!isset($_SESSION['creada'])) {
     session_regenerate_id(true);
     $_SESSION['creada'] = time();
-} elseif (time() - $_SESSION['creada'] > 300) { // cada 5 minutos
+} elseif (time() - $_SESSION['creada'] > 300) 
+{ // cada 5 minutos
     session_regenerate_id(true);
     $_SESSION['creada'] = time();
+}
 
 
 //Verificar si hay sesion activa
@@ -35,4 +37,9 @@ if (isset($_SESSION['ultimo_acceso'])) {
 }
 
 $_SESSION['ultimo_acceso'] = time();
+
+// Generar token CSRF si no existe
+if (!isset($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
 

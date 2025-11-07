@@ -217,6 +217,10 @@
 
       <label for="cantidad">Cantidad (€):</label>
       <input type="number" id="cantidad" name="cantidad" required />
+      
+      <?php
+      echo "<input type='hidden' name='csrf_token' value='" . htmlspecialchars($_SESSION["csrf_token"]) . "' />";
+      ?>
 
       <button id="item_add_summit" type="submit">Añadir apuesta</button>
     </form>

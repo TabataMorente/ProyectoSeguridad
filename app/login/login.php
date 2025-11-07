@@ -44,6 +44,9 @@ if ($row = $result->fetch_assoc()) {
         //Sesion segura
         session_regenerate_id(true);
         $_SESSION['email'] = $row['email']; //guardar quien ha iniciado sesion
+        $_SESSION['creada'] = time(); // guardamos cuándo se creó (para auth.php)
+        $_SESSION['ultimo_acceso'] = time(); // iniciamos el control de inactividad
+
         
         // Redirigir al usuario con su email en la URL
         header("Location: /pagUsuario/pagUsuario.php?user=" . urlencode($row["email"]));

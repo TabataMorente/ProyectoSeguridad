@@ -130,6 +130,8 @@
 
           echo "<label for='contrasena_nueva'>Nueva contraseña (opcional):</label>";
           echo "<input type='password' id='contrasena_nueva' name='contrasena_nueva' placeholder='Dejar vacío si no quieres cambiarla' />";
+
+          echo "<input type='hidden' name='csrf_token' value='" . htmlspecialchars($SESSION["csrf_token"]) . "' />";
       ?>
       <button id="user_modify_submit" type="submit">Guardar cambios</button>
     </form>
