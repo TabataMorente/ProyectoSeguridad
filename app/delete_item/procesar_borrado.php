@@ -57,7 +57,9 @@ $conn = new mysqli($hostname, $username, $password, $db);
 
 if ($conn->connect_error) {
     die("❌ Error de conexión: " . $conn->connect_error);
+    echo "<div class='volver-container'>";
     echo "<a href=" . "delete_item.php?user=" . urlencode($email) . ">Volver</a>";
+    echo "</div>";
 }
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {

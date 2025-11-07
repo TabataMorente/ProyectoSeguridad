@@ -52,10 +52,16 @@ $conn = new mysqli($hostname, $username, $password, $db);
 
 if ($conn->connect_error) {
     die("❌ Error de conexión: " . $conn->connect_error);
+    echo "<div class='volver-container'>";
+    echo "<a href=" . "add_item.php?user=" . urlencode($email) . ">Volver</a>";
+    echo "</div>";
 }
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo "Método no permitido.";
+    echo "<div class='volver-container'>";
+    echo "<a href=" . "add_item.php?user=" . urlencode($email) . ">Volver</a>";
+    echo "</div>";
     exit;
 }
 
@@ -66,6 +72,9 @@ $sql_usuario = "SELECT id FROM usuarios WHERE email = '$email'";
 $result_usuario = $conn->query($sql_usuario);
 if (!$result_usuario || $result_usuario->num_rows === 0) {
     echo "❌ Usuario no encontrado.";
+    echo "<div class='volver-container'>";
+    echo "<a href=" . "add_item.php?user=" . urlencode($email) . ">Volver</a>";
+    echo "</div>";
     exit;
 }
 $idUs = $result_usuario->fetch_assoc()['id'];
@@ -76,16 +85,25 @@ $cantidad  = isset($_POST['cantidad'])  ? $conn->real_escape_string($_POST['cant
 
 if (empty($cerdo) || !preg_match('/^[a-zA-Z0-9\s]{1,50}$/', $cerdo)) {
     echo "❌ El nombre del cerdo no es válido (solo letras, números y espacios, máx 50 caracteres).";
+    echo "<div class='volver-container'>";
+    echo "<a href=" . "add_item.php?user=" . urlencode($email) . ">Volver</a>";
+    echo "</div>";
     exit;
 }
 
 if (empty($carrera) || !preg_match('/^[a-zA-Z0-9\s]{1,50}$/', $carrera)) {
     echo "❌ El nombre de la carrera no es válido (solo letras, números y espacios, máx 50 caracteres).";
+    echo "<div class='volver-container'>";
+    echo "<a href=" . "add_item.php?user=" . urlencode($email) . ">Volver</a>";
+    echo "</div>";
     exit;
 }
 
 if (empty($cantidad) || !ctype_digit($cantidad) || (int)$cantidad <= 0) {
     echo "❌ La cantidad debe ser un número entero positivo.";
+    echo "<div class='volver-container'>";
+    echo "<a href=" . "add_item.php?user=" . urlencode($email) . ">Volver</a>";
+    echo "</div>";
     exit;
 }
 
