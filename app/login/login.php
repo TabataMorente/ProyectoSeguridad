@@ -6,7 +6,14 @@ ini_set('session.gc_maxlifetime',60*30); //Tiempo que el servidor mantiene la se
 session_start(); //inicia la sesion para poder guardar los datos del usuario
 
 
-if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+// Verificación del token CSRF
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    if (!isset($_POST['csrf_token']) || !isset($_SESSION['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        // Token inválido o ausente
+        header("Location: index.php?error=csrf");
+        exit;
+    }
+} else {
     echo "Método no permitido.";
     exit;
 }

@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === "GET" && isset($_GET["user"])) {
         $telefono = $row["telefono"];
         $fecha = $row["fecha"];
     } else {
-        header("Location: ../login/index.html?error=4");
+        header("Location: ../login/index.php?error=4");
         exit;
     }
 
@@ -39,6 +39,6 @@ if ($_SERVER['REQUEST_METHOD'] === "GET" && isset($_GET["user"])) {
     // Incluye el HTML que usa las variables $nombre, $email, ... (ver el fragmento de formulario abajo)
     include "index.html";
 } else {
-    header("Location: ../login/index.html?error=3");
+    header("Location: ../login/index.php?error=3");
     exit;
 }

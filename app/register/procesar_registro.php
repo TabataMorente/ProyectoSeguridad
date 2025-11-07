@@ -126,7 +126,7 @@ try {
 
     if ($stmt->execute()) {
         echo "✅ Registro completado correctamente.";
-        echo "<div class='volver-container'><a href='../login/index.html'>Iniciar sesión</a></div>";
+        echo "<div class='volver-container'><a href='../login/index.php'>Iniciar sesión</a></div>";
     } else {
         error_log("Execute error (insert): " . $stmt->error);
         echo "❌ Error al registrar el usuario. Inténtalo más tarde.";
