@@ -1,14 +1,5 @@
 <?php
 session_start();
-//  Verificar token CSRF
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
-        header("HTTP/1.1 403 Forbidden");
-        echo "❌ Solicitud no válida (token CSRF incorrecto o ausente).";
-        exit;
-    }
-}
-
 
 echo " 
     <style>
@@ -39,6 +30,20 @@ echo "
       background: #45a049;
     }
     </style>";
+
+
+//  Verificar token CSRF
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        echo "❌ Solicitud no válida (token CSRF incorrecto o ausente).";
+        echo "<div class='volver-container'>";
+        echo "<a href='../index.html'>Volver</a>";
+        echo "</div>";
+        exit;
+    }
+}
+
+
 
 // modify_datos.php
 
