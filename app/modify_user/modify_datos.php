@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 //  Verificar token CSRF
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
@@ -8,6 +8,37 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         exit;
     }
 }
+
+
+echo " 
+    <style>
+    .volver-container {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      color: #333;
+      gap: 5px;
+    }
+
+    .volver-container a {
+      background: #4CAF50;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    .volver-container a:hover {
+      background: #45a049;
+    }
+    </style>";
 
 // modify_datos.php
 
@@ -126,9 +157,11 @@ if ($change_password) {
     $stmt->bind_param("sssssi", $nombre, $dni, $telefono, $fecha, $email_nuevo, $user_id);
 }
 
-if ($stmt->execute()) {
+if ($stmt->execute()) {   
     echo "✅ Datos modificados correctamente.";
-    echo "<div class='volver-container'><a href='modify_user.php?user=" . urlencode($email_nuevo) . "'>Volver al perfil</a></div>";
+    echo "<div class='volver-container'><a href='modify_user.php?user=" . urlencode($email_nuevo) . "'>Volver</a></div>";
+
+    exit;
 } else {
     error_log("Execute error (update): " . $stmt->error);
     echo "❌ Error al modificar los datos. Inténtalo más tarde.";

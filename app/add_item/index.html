@@ -158,7 +158,7 @@
                 if ($carrera_actual !== null) {
                     echo "<br>"; // Separador entre carreras
                 }
-                echo "<strong> <u>Carrera ID: " . $row['carrera_id'] . "</u></strong><br>";
+                echo "<strong> <u>Carrera:</u></strong><br>";
                 echo " " . $row['carrera_nombre'] . "<br>";
                 echo "Fecha: " . $row['carrera_fecha'] . "<br>";
                 echo "<strong>Cerdos participantes:</strong><br>";
@@ -166,7 +166,7 @@
             }
 
             // Mostrar cada cerdo participante
-            echo "- Cerdo ID: " . $row['cerdo_id'] . ", " . $row['cerdo_nombre'] . "<br>";
+            echo "- Cerdo ID: " . $row['cerdo_nombre'] . "<br>";
         }
     }
 
