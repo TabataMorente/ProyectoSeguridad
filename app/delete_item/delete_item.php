@@ -1,6 +1,15 @@
 <?php
 include('../auth.php');
-include "index.php";
+// Recuperar el usuario de la sesión
+$email = $_SESSION['email'] ?? null;
+
+if ($email) {
+    header("Location: index.php?user=" . urlencode($email));
+    exit;
+} else {
+    header("Location: /index.html?error=acceso_no_autorizado");
+    exit;
+}
 
 echo " 
     <style>

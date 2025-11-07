@@ -22,6 +22,38 @@ if (!isset($_SESSION['creada'])) {
         //Verificar que hay parametro GET y que coincida con la sesion
         if (!isset($_GET['user']) || $_GET['user'] !== $_SESSION['email']) {
                 echo "No tienes permiso para acceder a esta página.";
+                echo " 
+                <style>
+                .volver-container {
+                position: absolute;
+                top: 10px;
+                right: 20px;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+                font-family: Arial, sans-serif;
+                font-size: 16px;
+                color: #333;
+                gap: 5px;
+                }
+
+                .volver-container a {
+                background: #4CAF50;
+                color: white;
+                padding: 8px 16px;
+                border-radius: 5px;
+                text-decoration: none;
+                font-weight: bold;
+                transition: background 0.3s ease;
+                }
+
+                .volver-container a:hover {
+                background: #45a049;
+                }
+                </style>";
+                echo "<div class='volver-container'>";
+                echo "<a href='../index.html'>Volver</a>";
+                echo "</div>";
                 exit;
         }
 
