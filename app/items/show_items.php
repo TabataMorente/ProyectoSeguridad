@@ -12,7 +12,7 @@ if ($conn->connect_error) {
 }
 
 // --- Construir la consulta directamente (INSEGURO) ---
-$sql = "
+$stmt = $conn->prepare("
     SELECT
         ce.nombre AS nombre_cerdo,
         ca.nombre AS nombre_carrera,
@@ -28,9 +28,11 @@ $sql = "
     JOIN carrera ca ON ap.idCarrera = ca.id
     JOIN usuarios us ON ap.idUs = us.id
     ORDER BY ap.idCarrera ASC
-";
+");
 
-$result = $conn->query($sql);
+$stmt->execute();
+
+$result = $stmt->get_result();
 
 if ($result === false) {
     echo "Error en la consulta: " . $conn->error;

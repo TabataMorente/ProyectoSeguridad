@@ -21,13 +21,16 @@ include('../auth.php');
                                 die("Database connection failed: " . $conn->connect_error);
                         }
 
-                        $comando = "SELECT `nombre` FROM `usuarios` WHERE `email`='" . $_GET["user"] . "';";
-                        $query = mysqli_query($conn, $comando) or die (mysqli_error($conn));
+                        //Evitar inyeccion SQL
+                        $stmt = $conn->prepare("SELECT nombre FROM usuarios WHERE email = ? LIMIT 1");
+                        $stmt->bind_param("s", $_SESSION['email']);
+                        $stmt->execute();
+                        $result = $stmt->get_result();
 
-                        if ($row = mysqli_fetch_array($query))
+                        if ($row = $result -> fetch_assoc())
                         {
                                 $nombre = $row["nombre"];
-                                $email = $_GET["user"];
+                                $email = $_SESSION["email"];
                         }
 
                         $conn->close();
