@@ -110,7 +110,7 @@ header("Content-Security-Policy: default-src 'self'; img-src 'self' data:; scrip
     <h1>Modificar mis datos</h1>
       <?php
 
-          echo "<form id='user_modify_form' action='modify_datos.php' method='POST'>";
+          echo "<form id='user_modify_form' action='modify_datos.php?user=" .urlencode($email). "' method='POST'>";
 
           echo "<label for='nombre'>Nombre y Apellidos:</label>";
           echo "<input type='text' id='nombre' name='nombre' required value='" . htmlspecialchars($nombre) . "' />";
