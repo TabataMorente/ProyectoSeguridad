@@ -1,6 +1,15 @@
 <?php
 session_start(); //inicia sesion para poder guardar los datos
 
+// Regenerar el ID de sesión periódicamente para evitar el secuestro de sesión
+if (!isset($_SESSION['creada'])) {
+    session_regenerate_id(true);
+    $_SESSION['creada'] = time();
+} elseif (time() - $_SESSION['creada'] > 300) { // cada 5 minutos
+    session_regenerate_id(true);
+    $_SESSION['creada'] = time();
+
+
 //Verificar si hay sesion activa
         if(!isset($_SESSION['email']))
         {
