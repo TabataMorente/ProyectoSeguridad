@@ -54,4 +54,7 @@ En la página de Apuestas se ofrecen las siguientes opciones:
 
 ## Fuentes (Ikers)
 
+
+## Inciso Inicio de Sesión##
+Cada vez que se inicia sesión o se crea una nueva cuenta, se aplica un algoritmo resumen en las contraseñas. Sin embargo, en el archivo `database.sql` los usuarios `mikel` y `aitor` tienen registradas sus contraseñas sin el algoritmo aplicado. Entonces, se han cambiado las contraseñas de los usuarios previos por las claves que tenían aplicando el algoritmo resumen que se ha utilizado en el programa. A nivel de usuario no se debería notar ninguna diferencia.
 **Plantilla login:** https://codepen.io/colorlib/pen/rxddKy/ <br>

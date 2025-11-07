@@ -102,8 +102,8 @@ INSERT INTO `participante` (`cerdo`, `idCarrera`) VALUES
 
 -- Ejemplo comentado para insertar usuarios
 INSERT INTO `usuarios` (`id`, `nombre`, `contrasena`, `dni`, `telefono`, `fecha`, `email`) VALUES
-(1, 'mikel', '1234', '12345678A', 600123456, '2025-10-01', 'mikel@example.com'),
-(2, 'aitor', '5678', '87654321B', 611987654, '2025-10-05', 'aitor@example.com');
+(1, 'mikel', '$2y$10$6VtxvE3BNc4wj/qzYohte.KVncRVLzGT5Wx9QNKivU7rscyc/4K1C', '12345678A', 600123456, '2025-10-01', 'mikel@example.com'),
+(2, 'aitor', '$2y$10$V5FwQjcIUZ/SXb2uk1aCVOsC6gnUX.BHWx7RKaljPiTqeXJ8lB5aa', '87654321B', 611987654, '2025-10-05', 'aitor@example.com');
 
 
 -- Datos de ejemplo para la apuestas
